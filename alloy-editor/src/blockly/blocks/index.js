@@ -1,4 +1,11 @@
-import "./alloy_and"
-import "./alloy_run"
-import "./alloy_sig"
-import "./alloy_fact"
+import "./alloy_and";
+import "./alloy_or";
+import "./alloy_run";
+import "./alloy_sig";
+import "./alloy_fact";
+import "./alloy_sigEx"
+import "./alloy_relation"
+import "./alloy_pred"
+import "./alloy_in"
+import "./alloy_rule_line"
+import "./alloy_sig_reference"

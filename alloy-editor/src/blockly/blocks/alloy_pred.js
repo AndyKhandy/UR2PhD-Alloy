@@ -1,13 +1,13 @@
 import * as Blockly from "blockly";
 
-Blockly.Blocks["alloy_fact"] = {
+Blockly.Blocks["alloy_pred"] = {
   init: function () {
     this.appendDummyInput()
-      .appendField("fact ")
+      .appendField("pred ")
       .appendField(new Blockly.FieldTextInput("name"), "NAME")
       .appendField(" {");
 
-    this.appendStatementInput("BODY").setCheck("LogicalStatement");
+    this.appendStatementInput("BODY");
 
     this.appendDummyInput().appendField("}");
 
