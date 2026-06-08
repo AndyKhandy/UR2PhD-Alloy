@@ -7,7 +7,7 @@ Blockly.Blocks["alloy_pred"] = {
       .appendField(new Blockly.FieldTextInput("name"), "NAME")
       .appendField(" {");
 
-    this.appendStatementInput("BODY");
+    this.appendStatementInput("BODY").setCheck("LogicalStatement");
 
     this.appendDummyInput().appendField("}");
 

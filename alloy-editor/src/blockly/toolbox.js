@@ -28,7 +28,18 @@ export const toolbox = {
       kind: "category",
       name: "Relations",
       colour: "#09efdc",
-      contents: [{ kind: "block", type: "alloy_relation" }],
+      contents: [
+        { kind: "block", type: "alloy_relation" },
+        {
+          kind: "label",
+          text: "-- Comparison Operators --",
+          "web-class": "alloy-toolbox-heading",
+        },
+        { kind: "block", type: "alloy_in" },
+        { kind: "block", type: "alloy_!in" },
+        { kind: "block", type: "alloy_=" },
+        { kind: "block", type: "alloy_!=" },
+      ],
     },
     {
       kind: "category",
@@ -42,13 +53,18 @@ export const toolbox = {
         },
         { kind: "block", type: "alloy_and" },
         { kind: "block", type: "alloy_or" },
-
-        {
-          kind: "label",
-          text: "-- Expression Connectors --",
-          "web-class": "alloy-toolbox-heading",
-        },
-        { kind: "block", type: "alloy_in" },
+        { kind: "block", type: "alloy_implication" },
+        { kind: "block", type: "alloy_biconditional" },
+      ],
+    },
+    {
+      kind: "category",
+      name: "Pred and Facts",
+      colour: "#004cff",
+      contents: [
+        { kind: "block", type: "alloy_fact" },
+        { kind: "block", type: "alloy_pred" },
+        { kind: "block", type: "alloy_rule_line" },
       ],
     },
     {
@@ -57,9 +73,7 @@ export const toolbox = {
       colour: "#db3a3a",
       contents: [
         { kind: "block", type: "alloy_run" },
-        { kind: "block", type: "alloy_fact" },
-        { kind: "block", type: "alloy_pred" },
-        { kind: "block", type: "alloy_rule_line" },
+        { kind: "block", type: "alloy_check" },
       ],
     },
   ],

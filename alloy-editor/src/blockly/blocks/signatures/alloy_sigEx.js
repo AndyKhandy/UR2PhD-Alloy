@@ -9,7 +9,7 @@ Blockly.Blocks["alloy_sigEx"] = {
       .appendField(new Blockly.FieldTextInput("Person"), "EXTENDNAME")
       .appendField("{");
 
-    this.appendStatementInput("BODY");
+    this.appendStatementInput("BODY").setCheck("Relation");
 
     this.appendDummyInput().appendField("}");
 

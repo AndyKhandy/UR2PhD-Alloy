@@ -11,9 +11,7 @@ Blockly.Blocks['alloy_relation'] = {
             ["lone", "lone"],
             ["some","some"],
             ["set","set"]
-        ]), "MULTIPLICITY")
-
-        this.appendValueInput("TARGET_SET").setCheck("Expression");
+        ]), "MULTIPLICITY").appendField(new Blockly.FieldTextInput("targetSig"), "TARGET_SET");
 
         this.setInputsInline(true);
 
