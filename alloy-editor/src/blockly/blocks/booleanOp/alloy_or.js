@@ -11,5 +11,9 @@ Blockly.Blocks["alloy_or"] = {
     this.setOutput(true, "Boolean");
     this.setInputsInline(true);
     this.setColour(160);
+    this.setTooltip(
+      "Logical OR — true when at least one side is true. Each socket accepts " +
+        "a true/false formula (Boolean). Example: (a in b) or (c = d)",
+    );
   },
 };

@@ -15,5 +15,9 @@ Blockly.Blocks["alloy_sig"] = {
     this.setNextStatement(true);
 
     this.setColour(230);
+    this.setTooltip(
+      "Declares a signature — a named set of atoms (like a type/class). " +
+        "Field blocks nest inside the braces. Example: sig Person { }",
+    );
   },
 };

@@ -11,5 +11,11 @@ Blockly.Blocks["alloy_!="] = {
         this.setInputsInline(true);
         this.setOutput(true, "Boolean");
         this.setColour(160);
+
+        this.setTooltip(
+            "Inequality — true when the two sides denote different sets/relations. " +
+                "Both sockets take a set/expression (Expression). " +
+                "Example: a != b"
+        );
     }
 }

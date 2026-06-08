@@ -1,0 +1,17 @@
+import * as Blockly from "blockly";
+
+Blockly.Blocks["alloy_*"] = {
+  init: function () {
+    this.appendDummyInput().appendField("*");
+    this.appendValueInput("A").setCheck("Expression");
+
+    this.setOutput(true, "Expression");
+    this.setInputsInline(true);
+    this.setColour(160);
+    this.setTooltip(
+      "Reflexive-transitive closure (*) — like ^ but also includes each atom " +
+        "reaching itself (0+ steps). The socket takes a binary relation/" +
+        "expression (Expression). Example: *parent",
+    );
+  },
+};

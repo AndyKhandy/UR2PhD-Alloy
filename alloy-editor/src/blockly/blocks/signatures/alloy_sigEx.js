@@ -17,5 +17,10 @@ Blockly.Blocks["alloy_sigEx"] = {
     this.setNextStatement(true);
 
     this.setColour(230);
+    this.setTooltip(
+      "Declares a signature that extends a parent — it inherits the parent's " +
+        "fields and is a subset of it. Field blocks nest inside the braces. " +
+        "Example: sig Student extends Person { }",
+    );
   },
 };

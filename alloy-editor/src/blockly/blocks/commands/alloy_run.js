@@ -10,5 +10,10 @@ Blockly.Blocks["alloy_run"] = {
 
     this.setPreviousStatement(true);
     this.setColour(120);
+    this.setTooltip(
+      "run — asks the Analyzer to find an example instance that satisfies the " +
+        "named predicate, searching up to the given scope (max atoms per " +
+        "signature). Example: run predName for 5",
+    );
   },
 };

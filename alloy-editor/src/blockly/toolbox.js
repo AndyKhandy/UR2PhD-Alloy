@@ -11,41 +11,53 @@ export const toolbox = {
           kind: "block",
           type: "alloy_sigEx",
         },
+        { kind: "block", type: "alloy_relation" },
       ],
     },
     {
       kind: "category",
-      name: "Expressions",
+      name: "Expressions/Sets",
       colour: "#4dffa9",
       contents: [
         {
           kind: "block",
           type: "alloy_sig_reference",
         },
-      ],
-    },
-    {
-      kind: "category",
-      name: "Relations",
-      colour: "#09efdc",
-      contents: [
-        { kind: "block", type: "alloy_relation" },
         {
           kind: "label",
-          text: "-- Comparison Operators --",
+          text: "-- Set Operators --",
           "web-class": "alloy-toolbox-heading",
         },
-        { kind: "block", type: "alloy_in" },
-        { kind: "block", type: "alloy_!in" },
-        { kind: "block", type: "alloy_=" },
-        { kind: "block", type: "alloy_!=" },
+        {
+          kind: "block",
+          type: "alloy_^",
+        },
+        {
+          kind: "block",
+          type: "alloy_~",
+        },
+        {
+          kind: "block",
+          type: "alloy_*",
+        },
+        {
+          kind: "label",
+          text: "-- Set Connectors --",
+          "web-class": "alloy-toolbox-heading",
+        },
+        { kind: "block", type: "alloy_&" },
+        { kind: "block", type: "alloy_+" },
+        { kind: "block", type: "alloy_-" },
+        { kind: "block", type: "alloy_." },
       ],
     },
     {
       kind: "category",
-      name: "Logic",
+      name: "Boolean",
       colour: "#3adb85",
       contents: [
+        { kind: "block", type: "alloy_!" },
+        { kind: "block", type: "alloy_set" },
         {
           kind: "label",
           text: "-- Boolean Connectors --",
@@ -55,6 +67,16 @@ export const toolbox = {
         { kind: "block", type: "alloy_or" },
         { kind: "block", type: "alloy_implication" },
         { kind: "block", type: "alloy_biconditional" },
+
+        {
+          kind: "label",
+          text: "-- Comparison Operators --",
+          "web-class": "alloy-toolbox-heading",
+        },
+        { kind: "block", type: "alloy_in" },
+        { kind: "block", type: "alloy_!in" },
+        { kind: "block", type: "alloy_=" },
+        { kind: "block", type: "alloy_!=" },
       ],
     },
     {

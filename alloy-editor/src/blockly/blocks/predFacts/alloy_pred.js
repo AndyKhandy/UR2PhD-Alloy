@@ -14,5 +14,10 @@ Blockly.Blocks["alloy_pred"] = {
     this.setPreviousStatement(true);
     this.setNextStatement(true);
     this.setColour(20);
+    this.setTooltip(
+      "Defines a predicate — a named, reusable constraint you can later run or " +
+        "call by name. Stack constraint lines inside the braces. " +
+        "Example: pred hasParent { some Person.parent }",
+    );
   },
 };

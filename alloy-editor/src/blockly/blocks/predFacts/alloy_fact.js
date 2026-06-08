@@ -14,5 +14,10 @@ Blockly.Blocks["alloy_fact"] = {
     this.setPreviousStatement(true);
     this.setNextStatement(true);
     this.setColour(20);
+    this.setTooltip(
+      "Defines a fact — a constraint that must ALWAYS hold in every instance " +
+        "of the model. Stack constraint lines inside the braces. " +
+        "Example: fact { all p: Person | p not in p.parent }",
+    );
   },
 };

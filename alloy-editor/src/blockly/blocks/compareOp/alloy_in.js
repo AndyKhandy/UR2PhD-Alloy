@@ -13,5 +13,11 @@ Blockly.Blocks["alloy_in"] = {
         this.setOutput(true, "Boolean");
 
         this.setColour(160);
+
+        this.setTooltip(
+            "Subset test — true when the left set is contained in the right set. " +
+                "Both sockets take a set/expression (Expression). " +
+                "Example: Student in Person"
+        );
     }
 }
