@@ -10,7 +10,7 @@ Blockly.Blocks["alloy_and"] = {
 
     this.setOutput(true, "Boolean");
     this.setInputsInline(true);
-    this.setColour(160);
+    this.setColour("8C0000");
     this.setTooltip(
       "Logical AND — true only when both sides are true. Each socket accepts " +
         "a true/false formula (Boolean). Example: (Student in Person) and (a = b)",

@@ -17,12 +17,21 @@ export const toolbox = {
     {
       kind: "category",
       name: "Expressions/Sets",
-      colour: "#4dffa9",
+      colour: "#00058C",
       contents: [
         {
           kind: "block",
           type: "alloy_sig_reference",
         },
+        {
+          kind: "label",
+          text: "-- Set Connectors --",
+          "web-class": "alloy-toolbox-heading",
+        },
+        { kind: "block", type: "alloy_&" },
+        { kind: "block", type: "alloy_+" },
+        { kind: "block", type: "alloy_-" },
+        { kind: "block", type: "alloy_." },
         {
           kind: "label",
           text: "-- Set Operators --",
@@ -40,21 +49,12 @@ export const toolbox = {
           kind: "block",
           type: "alloy_*",
         },
-        {
-          kind: "label",
-          text: "-- Set Connectors --",
-          "web-class": "alloy-toolbox-heading",
-        },
-        { kind: "block", type: "alloy_&" },
-        { kind: "block", type: "alloy_+" },
-        { kind: "block", type: "alloy_-" },
-        { kind: "block", type: "alloy_." },
       ],
     },
     {
       kind: "category",
       name: "Boolean",
-      colour: "#3adb85",
+      colour: "#8C0000",
       contents: [
         { kind: "block", type: "alloy_!" },
         { kind: "block", type: "alloy_set" },
@@ -82,7 +82,7 @@ export const toolbox = {
     {
       kind: "category",
       name: "Pred and Facts",
-      colour: "#004cff",
+      colour: "#B38E4F",
       contents: [
         { kind: "block", type: "alloy_fact" },
         { kind: "block", type: "alloy_pred" },
@@ -92,7 +92,7 @@ export const toolbox = {
     {
       kind: "category",
       name: "Commands",
-      colour: "#db3a3a",
+      colour: "#3BA61B",
       contents: [
         { kind: "block", type: "alloy_run" },
         { kind: "block", type: "alloy_check" },

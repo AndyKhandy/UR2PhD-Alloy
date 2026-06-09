@@ -12,7 +12,7 @@ Blockly.Blocks["alloy_!in"] = {
 
         this.setOutput(true, "Boolean");
 
-        this.setColour(160);
+        this.setColour("C97C00");
 
         this.setTooltip(
             "Negated subset test — true when the left set is NOT contained in " +

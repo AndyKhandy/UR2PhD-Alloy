@@ -10,7 +10,7 @@ Blockly.Blocks["alloy_="] = {
 
         this.setInputsInline(true);
         this.setOutput(true, "Boolean");
-        this.setColour(160);
+        this.setColour("C97C00");
 
         this.setTooltip(
             "Equality — true when both sides denote the same set/relation. " +

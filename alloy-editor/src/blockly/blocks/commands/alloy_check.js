@@ -9,7 +9,7 @@ Blockly.Blocks["alloy_check"] = {
       .appendField(new Blockly.FieldNumber(5,1), "AMOUNT");
 
     this.setPreviousStatement(true);
-    this.setColour(120);
+    this.setColour("3BA61B");
     this.setTooltip(
       "check — asks the Analyzer to find a counterexample that violates the " +
         "named assertion, up to the given scope. If none is found, the " +

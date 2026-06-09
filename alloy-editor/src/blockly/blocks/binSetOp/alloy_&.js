@@ -10,7 +10,7 @@ Blockly.Blocks["alloy_&"] = {
 
     this.setOutput(true, "Expression");
     this.setInputsInline(true);
-    this.setColour(160);
+    this.setColour("#00058C");
     this.setTooltip(
       "Set intersection (&) — produces atoms that appear in both sides. " +
         "Both sockets take a set/expression (Expression). Example: Teacher & Parent",

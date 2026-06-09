@@ -10,7 +10,7 @@ Blockly.Blocks["alloy_biconditional"] = {
 
     this.setOutput(true, "Boolean");
     this.setInputsInline(true);
-    this.setColour(160);
+    this.setColour("8C0000");
     this.setTooltip(
       "Biconditional (<=>) — true when both sides have the same truth value " +
         "(both true or both false). Each socket accepts a true/false formula " +

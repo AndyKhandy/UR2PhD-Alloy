@@ -71,5 +71,4 @@ new Blockly.FieldTextInput("Person"),
 
 - Used for container blocks.
   - Example:
-
   - this.appendStatementInput("BODY");

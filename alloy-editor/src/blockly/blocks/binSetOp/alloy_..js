@@ -10,7 +10,7 @@ Blockly.Blocks["alloy_."] = {
 
     this.setOutput(true, "Expression");
     this.setInputsInline(true);
-    this.setColour(160);
+    this.setColour("#00058C");
     this.setTooltip(
       "Relational join (.) — navigates/composes relations, e.g. follows a field " +
         "from a set to its targets. Both sockets take a set/expression " +

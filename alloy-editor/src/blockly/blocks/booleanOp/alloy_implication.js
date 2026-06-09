@@ -10,7 +10,7 @@ Blockly.Blocks["alloy_implication"] = {
 
     this.setOutput(true, "Boolean");
     this.setInputsInline(true);
-    this.setColour(160);
+    this.setColour("8C0000");
     this.setTooltip(
       "Implication (=>) — true unless the left side is true and the right is " +
         "false. Each socket accepts a true/false formula (Boolean). " +

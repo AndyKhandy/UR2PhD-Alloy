@@ -7,7 +7,7 @@ Blockly.Blocks["alloy_*"] = {
 
     this.setOutput(true, "Expression");
     this.setInputsInline(true);
-    this.setColour(160);
+    this.setColour("#47008C");
     this.setTooltip(
       "Reflexive-transitive closure (*) — like ^ but also includes each atom " +
         "reaching itself (0+ steps). The socket takes a binary relation/" +
