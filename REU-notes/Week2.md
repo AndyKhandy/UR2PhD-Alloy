@@ -12,53 +12,9 @@ Tasks for the week of 6/8:
 * Value Blocks - sockets contain other blocks so use **alloyGenerator.valueToCode(block, "BLOCKNAME")**
 * Statement Blocks - contains a body so use **alloyGenerator.statementToCode(block, "BODYNAME")**
 
+The rule: 
+* any block with setOutput(true, ...) (a value-producing block) must return [string, order]. 
+* Blocks with setPreviousStatement/setNextStatement (statement blocks) return a plain string. 
 
-How Generation Happens
-
-Eventually you'll have a button:
-
-<button onClick={generateAlloy}>
-  Generate Alloy
-</button>
-
-Function:
-
-function generateAlloy() {
-
-  const code =
-    alloyGenerator.workspaceToCode(
-      workspaceRef.current
-    );
-
-  console.log(code);
-}
-
-This is the magic call.
-
-Blockly:
-
-Workspace
- ↓
-Walk every block
- ↓
-Call generator functions
- ↓
-Combine results
- ↓
-Return Alloy source
-Example End Result
-
-Workspace:
-
-sig Person
-
-pred show
- └─ Person
-
-Generated:
-
-sig Person {}
-
-pred show {
-    Person
-}
+The order integer is Blockly's precedence hint for auto-parenthesization — 0 means "treat as atomic, never add extra parens."
+[is needed in valueToCode as a third input]

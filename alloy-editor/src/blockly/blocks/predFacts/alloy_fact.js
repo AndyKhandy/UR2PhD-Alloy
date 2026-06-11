@@ -13,6 +13,7 @@ Blockly.Blocks["alloy_fact"] = {
 
     this.setPreviousStatement(true);
     this.setNextStatement(true);
+    this.setInputsInline(true);
     this.setColour("B38E4F");
     this.setTooltip(
       "Defines a fact — a constraint that must ALWAYS hold in every instance " +

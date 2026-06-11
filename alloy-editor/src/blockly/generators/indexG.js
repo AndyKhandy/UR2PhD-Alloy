@@ -1,1 +1,7 @@
 import "./signatures/signatureGenerators"
+import "./binSetOp/binSetOpGenerators"
+import "./predFacts/predFactsGenerator"
+import "./compareOp/compareOpGenerator"
+import "./booleanOp/booleanOpGenerators"
+import "./commands/commandsGenerator"
+import "./unSetOp/unSetOpGenerators"

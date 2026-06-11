@@ -13,6 +13,7 @@ Blockly.Blocks["alloy_pred"] = {
 
     this.setPreviousStatement(true);
     this.setNextStatement(true);
+    this.setInputsInline(true);
     this.setColour("B38E4F");
     this.setTooltip(
       "Defines a predicate — a named, reusable constraint you can later run or " +
