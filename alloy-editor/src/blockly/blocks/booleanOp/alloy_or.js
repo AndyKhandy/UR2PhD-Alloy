@@ -2,11 +2,11 @@ import * as Blockly from "blockly";
 
 Blockly.Blocks["alloy_or"] = {
   init: function () {
-    this.appendValueInput("A").setCheck("Boolean");
+    this.appendValueInput("LEFT").setCheck("Boolean");
 
     this.appendDummyInput().appendField("or");
 
-    this.appendValueInput("B").setCheck("Boolean");
+    this.appendValueInput("RIGHT").setCheck("Boolean");
 
     this.setOutput(true, "Boolean");
     this.setInputsInline(true);

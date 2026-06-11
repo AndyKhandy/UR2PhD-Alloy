@@ -6,6 +6,11 @@ export const toolbox = {
       name: "Signatures",
       colour: "#5C81A6",
       contents: [
+        { kind: "block", type: "alloy_sig_empty" },
+        {
+          kind: "block",
+          type: "alloy_sigEx_empty",
+        },
         { kind: "block", type: "alloy_sig" },
         {
           kind: "block",
