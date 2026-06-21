@@ -44,42 +44,41 @@ public class AlloyAPI {
         A4Solution instance = TranslateAlloyToKodkod.execute_command(rep, world.getAllReachableSigs(), command, options);
 
 		// Check if a satisfying instance actually exists
-if (instance.satisfiable()) {
-    System.out.println("Status: SATISFIABLE");
+        if (instance.satisfiable()) {
+            System.out.println("Status: SATISFIABLE");
 
     // 1. Iterate over all signatures parsed in the environment
-    for (Sig sig : world.getAllReachableSigs()) {
+        for (Sig sig : world.getAllReachableSigs()) {
         
         // FIX: Explicitly skip built-in primitive system types
-        if (sig == Sig.UNIV || sig == Sig.SIGINT || sig == Sig.SEQIDX || sig == Sig.STRING || sig == Sig.NONE) {
+            if (sig == Sig.UNIV || sig == Sig.SIGINT || sig == Sig.SEQIDX || sig == Sig.STRING || sig == Sig.NONE) {
             continue;
-        }
+            }
 
         // Alternatively, you can ensure it's a user-defined signature by checking its label:
         // if (!sig.label.startsWith("this/")) continue;
 
-        System.out.println("Signature Name: " + sig.label);
+            System.out.println("Signature Name: " + sig.label);
 
         // 2. Extract the actual elements (atoms) assigned to this signature
-        for (A4Tuple tuple : instance.eval(sig)) {
-            System.out.println("  Found Atom: " + tuple.atom(0));
-        }
+            for (A4Tuple tuple : instance.eval(sig)) {
+                System.out.println("  Found Atom: " + tuple.atom(0));
+            }
 		
         // 3. Extract the relations (fields) defined inside this signature
-for (Sig.Field field : sig.getFields()) {
-    // field.label gives you the name of the relation (e.g., "mapsTo", "friends")
-    System.out.println("  Field/Relation: " + field.label);
+            for (Sig.Field field : sig.getFields()) {
+                // field.label gives you the name of the relation (e.g., "mapsTo", "friends")
+                System.out.println("  Field/Relation: " + field.label);
     
-    // Evaluate the exact relational links/tuples for this specific field
-    for (A4Tuple tuple : instance.eval(field)) {
-        // A relation tuple links atoms together (e.g., Person$0 -> File$1)
-        System.out.println("    Link: " + tuple.atom(0) + " maps to " + tuple.atom(1));
+                // Evaluate the exact relational links/tuples for this specific field
+                for (A4Tuple tuple : instance.eval(field)) {
+                    // A relation tuple links atoms together (e.g., Person$0 -> File$1)
+                    System.out.println("    Link: " + tuple.atom(0) + " maps to " + tuple.atom(1));
+                }
+            }
+        }
+    } else {
+        System.out.println("Status: UNSATISFIABLE");
     }
-}
-    }
-} else {
-    System.out.println("Status: UNSATISFIABLE");
-}
-
 	}
 }
