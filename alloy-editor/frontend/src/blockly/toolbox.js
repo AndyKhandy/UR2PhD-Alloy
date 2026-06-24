@@ -99,6 +99,9 @@ export const toolbox = {
       name: "Commands",
       colour: "#3BA61B",
       contents: [
+        {
+          kind: "block", type: "alloy_run_{}"
+        },
         { kind: "block", type: "alloy_run" },
         { kind: "block", type: "alloy_check" },
       ],

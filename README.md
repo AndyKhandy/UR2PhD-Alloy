@@ -105,3 +105,21 @@ SAT / UNSAT Result
 ```
 
 Successfully completing this workflow will establish the foundation for future backend integration and full model execution support.
+
+
+To Run
+
+Open two terminals:
+```text
+# Terminal 1 — backend (from alloy-editor/backend/)
+mvn spring-boot:run
+
+# Terminal 2 — frontend (from alloy-editor/frontend/)
+npm run dev
+
+Then open http://localhost:5173, build a model with blocks, and click Run Model.
+```
+
+*READ THE NEXT TIME YOU OPEN*
+![alt text](image.png)
+Next commmit was creating a new block for the constraint run (Ex) run {} for 3 but I didn't want to commit everything so quickly LOL

@@ -1,3 +1,5 @@
+package com.ur2phd.alloy;
+
 public class Relation {
     private final String fieldName;
     private final String source;

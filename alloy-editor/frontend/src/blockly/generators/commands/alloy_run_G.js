@@ -1,9 +1,9 @@
 import { alloyGenerator } from "../alloy_generator";
 
-alloyGenerator.forBlock["alloy_run"] = function(block) {
-    const predName = block.getFieldValue("TARGET");
+alloyGenerator.forBlock["alloy_run"] = function (block) {
+  const predName = block.getFieldValue("TARGET");
 
-    const amount = alloyGenerator.statementToCode(block, "AMOUNT");
+  const amount = block.getFieldValue("AMOUNT");
 
-    return `run ${predName} for ${amount}`;
+  return `run ${predName} for ${amount}`;
 };

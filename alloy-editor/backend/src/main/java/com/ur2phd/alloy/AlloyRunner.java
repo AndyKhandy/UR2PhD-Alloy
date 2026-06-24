@@ -1,3 +1,5 @@
+package com.ur2phd.alloy;
+
 import edu.mit.csail.sdg.alloy4.A4Reporter;
 import edu.mit.csail.sdg.alloy4.ErrorWarning;
 import edu.mit.csail.sdg.ast.Command;
@@ -9,11 +11,13 @@ import edu.mit.csail.sdg.translator.A4Solution;
 import edu.mit.csail.sdg.translator.A4Tuple;
 import edu.mit.csail.sdg.translator.TranslateAlloyToKodkod;
 import kodkod.solvers.PMaxSAT4JRef;
+import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+@Service
 public class AlloyRunner {
 
     private final A4Reporter reporter;

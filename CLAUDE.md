@@ -16,10 +16,21 @@ npm run build     # production build
 npm run lint      # ESLint check
 ```
 
-**Backend** — run from `alloy-editor/backend/` (Maven not installed; use direct javac/java):
+**Backend** — run from `alloy-editor/backend/`:
 
 ```powershell
-& "C:\Program Files\Java\jdk-25\bin\javac.exe" -cp lib\alloy.jar -d target\classes src\main\java\AlloyAPI.java
+mvn spring-boot:run    # starts Spring Boot on http://localhost:8080
+```
+
+**One-time Maven setup** (Maven installed at `C:\Users\andyt\apache-maven\apache-maven-3.9.6\`):
+```powershell
+# Register alloy.jar with Maven (run once after cloning):
+mvn install:install-file -Dfile="C:\...\alloy-editor\backend\lib\alloy.jar" -DgroupId=org.alloytools -DartifactId=alloy-dist -Dversion=local -Dpackaging=jar -DgeneratePom=true
+```
+
+**Standalone (no Spring Boot)** — still works via `run.bat` or direct javac:
+```powershell
+& "C:\Program Files\Java\jdk-25\bin\javac.exe" -cp lib\alloy.jar -d target\classes src\main\java\Relation.java src\main\java\AlloyResult.java src\main\java\AlloyRunner.java src\main\java\AlloyAPI.java
 & "C:\Program Files\Java\jdk-25\bin\java.exe" -cp "target\classes;lib\alloy.jar" AlloyAPI
 ```
 
@@ -52,21 +63,30 @@ alloy-editor/frontend/src/
 
 ```
 alloy-editor/backend/
-  pom.xml                     # Maven project; alloy-dist:local dependency
-  lib/alloy.jar               # Alloy distribution JAR (gitignored)
-  src/main/java/AlloyAPI.java # entry point
+  pom.xml                              # Spring Boot 3.3.5 parent + spring-boot-starter-web
+  lib/alloy.jar                        # Alloy distribution JAR (gitignored)
+  run.bat                              # standalone compile/run (no Spring Boot)
+  src/main/java/com/ur2phd/alloy/
+    AlloyApplication.java              # @SpringBootApplication entry point
+    AlloyController.java               # @RestController: POST /run-model
+    ModelRequest.java                  # request DTO: { modelText }
+    AlloyRunner.java                   # @Service: parses and executes Alloy models
+    AlloyResult.java                   # result DTO: { satisfiable, atoms, relations }
+    Relation.java                      # immutable tuple: fieldName, source, target
 ```
 
-**One-time JAR setup:** Download from [AlloyTools releases](https://github.com/AlloyTools/org.alloytools.alloy/releases), place at `lib/alloy.jar`.
+**One-time JAR setup:** Download from [AlloyTools releases](https://github.com/AlloyTools/org.alloytools.alloy/releases), place at `lib/alloy.jar`, then run the Maven install command above.
 
-**AlloyAPI.java flow:**
-1. Set `model_text` to the Alloy source string
-2. `CompUtil.parseEverything_fromString(rep, model_text)` → `CompModule`
-3. `world.getAllCommands().get(cmdNum)` — selects which `run`/`check` command to execute
-4. Configure `A4Options` with `PMaxSAT4JRef.INSTANCE` as the SAT solver
-5. `TranslateAlloyToKodkod.execute_command(...)` → `A4Solution`
-6. `System.out.println(instance)` — prints the found instance or counterexample
+**REST endpoint:** `POST http://localhost:8080/run-model`
+- Request body: `{ "modelText": "sig Person {} run { some Person } for 3" }`
+- Response: `{ "satisfiable": true, "atoms": { "this/Person": ["Person$0"] }, "relations": [] }`
 
-**Reading output:** INFO lines from Kodkod are solver noise (ignore them). The `---Trace---` section is the result — it shows atom sets for each signature and relation mappings. `State 0 (loop)` means a temporal model that stays in one state.
+**AlloyRunner flow:**
+1. `CompUtil.parseEverything_fromString(reporter, modelText)` → `CompModule`
+2. `world.getAllCommands().get(commandIndex)` — selects which `run`/`check` command
+3. Configure `A4Options` with `PMaxSAT4JRef.INSTANCE` as the SAT solver
+4. `TranslateAlloyToKodkod.execute_command(...)` → `A4Solution`
+5. Walk user-defined sigs → collect atoms into `Map<String, List<String>>` and relation tuples into `List<Relation>`
+6. Return `AlloyResult` — serialized to JSON by Jackson automatically
 
-Spring Boot REST layer planned for a later phase, after standalone execution is proven.
+**CORS:** `@CrossOrigin(origins = "http://localhost:5173")` on `AlloyController` allows the Vite dev server to call the backend.
