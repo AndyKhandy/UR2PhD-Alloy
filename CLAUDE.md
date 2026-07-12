@@ -34,8 +34,6 @@ mvn install:install-file -Dfile="C:\...\alloy-editor\backend\lib\alloy.jar" -Dgr
 & "C:\Program Files\Java\jdk-25\bin\java.exe" -cp "target\classes;lib\alloy.jar" AlloyAPI
 ```
 
-## Architecture
-
 ### Frontend
 
 ```

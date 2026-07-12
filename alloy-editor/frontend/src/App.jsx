@@ -1,5 +1,5 @@
 import BlocklyEditor from "./components/BlocklyEditor";
-import './App.css'
+import "./styles/App.css"
 
 function App() {
   return (

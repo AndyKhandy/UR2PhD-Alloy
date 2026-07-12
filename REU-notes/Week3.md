@@ -123,24 +123,6 @@ Why: This one dependency pulls in everserver: Spring MVC (routing), Tomcat(the e
 
 Changed Java version from 11 → 17:
 Why: Spring Boot 3.x requires Java 17 minimum. Your machine has JDK 25 so this just changes what bytecode level Maven targets.
-
----
-2. Package Declarations — com.ur2phd.alloy
-
-Every file now starts with:
-package com.ur2phd.alloy;
-Why: Spring Boot finds your classes th scans the package tree looking for
-3. AlloyApplication.java — The Entry Point
-
-@SpringBootApplication
-public class AlloyApplication {
-    public static void main(String[] args) {
-        SpringApplication.run(AlloyApplication.class, args);
-    }
-}
-Why: @SpringBootApplication does three things at once: it marks this as the app's starting point, enables auto-configuration (Spring wires up Tomcat, Jackson, etc. automatically), and tells Spring to scan
-com.ur2phd.alloy.* for components. Spre whole server — it replaces the oldAlloyAPI.main().
-
 ---
 4. @Service on AlloyRunner
 
@@ -156,7 +138,7 @@ public class ModelRequest {
     public String getModelText() { ... }
     public void setModelText(String t)
 }
-Why: When the React frontend POSTs { ", Spring needs a Java object to putthat data into. Jackson (the JSON library) reads the incoming JSON and calls setModelText() to populate
+Why: When the React frontend POSTs { }", Spring needs a Java object to put that data into. Jackson (the JSON library) reads the incoming JSON and calls setModelText() to populate
 this object. Without it, there's nowheand.
 
 ---

@@ -1,9 +1,10 @@
 import { useEffect, useRef, useState } from "react";
 import * as Blockly from "blockly";
 import "../blockly/blocks/index";
-import "../blockly/generators/indexG"
+import "../blockly/generators/indexG";
 import { toolbox } from "../blockly/toolbox";
 import { alloyGenerator } from "../blockly/generators/alloy_generator";
+import "../styles/blockly.css"
 
 export default function BlocklyEditor() {
   const blocklyDiv = useRef(null);
@@ -16,7 +17,10 @@ export default function BlocklyEditor() {
   useEffect(() => {
     if (workspaceRef.current) return;
 
-    workspaceRef.current = Blockly.inject(blocklyDiv.current, { toolbox });
+    workspaceRef.current = Blockly.inject(blocklyDiv.current, {
+      renderer: "zelos",
+      toolbox,
+    });
 
     return () => {
       workspaceRef.current?.dispose();
@@ -75,18 +79,20 @@ export default function BlocklyEditor() {
       </div>
       <pre>{alloyCode}</pre>
       {runError && (
-        <div style={{ color: "red", padding: "8px" }}>
-          Error: {runError}
-        </div>
+        <div style={{ color: "red", padding: "8px" }}>Error: {runError}</div>
       )}
       {runResult && (
         <div style={{ padding: "8px", fontFamily: "monospace" }}>
-          <strong>Status: {runResult.satisfiable ? "SATISFIABLE ✓" : "UNSATISFIABLE ✗"}</strong>
+          <strong>
+            Status:{" "}
+            {runResult.satisfiable ? "SATISFIABLE ✓" : "UNSATISFIABLE ✗"}
+          </strong>
           {runResult.satisfiable && (
             <>
               {Object.entries(runResult.atoms).map(([sig, atoms]) => (
                 <div key={sig} style={{ marginTop: "4px" }}>
-                  <em>{sig}</em>: {atoms.length > 0 ? atoms.join(", ") : "(empty)"}
+                  <em>{sig}</em>:{" "}
+                  {atoms.length > 0 ? atoms.join(", ") : "(empty)"}
                 </div>
               ))}
               {runResult.relations.length > 0 && (

@@ -6,12 +6,17 @@ export const toolbox = {
       name: "Signatures",
       colour: "#5C81A6",
       contents: [
+        {
+          kind: "label",
+          text: " ",
+          gap: 14,
+        },
         { kind: "block", type: "alloy_sig_empty" },
+        { kind: "block", type: "alloy_sig" },
         {
           kind: "block",
           type: "alloy_sigEx_empty",
         },
-        { kind: "block", type: "alloy_sig" },
         {
           kind: "block",
           type: "alloy_sigEx",
@@ -25,12 +30,17 @@ export const toolbox = {
       colour: "#00058C",
       contents: [
         {
+          kind: "label",
+          text: " ",
+          gap: 14,
+        },
+        {
           kind: "block",
           type: "alloy_sig_reference",
         },
         {
           kind: "label",
-          text: "-- Set Connectors --",
+          text: "  -- Set Connectors",
           "web-class": "alloy-toolbox-heading",
         },
         { kind: "block", type: "alloy_&" },
@@ -39,7 +49,7 @@ export const toolbox = {
         { kind: "block", type: "alloy_." },
         {
           kind: "label",
-          text: "-- Set Operators --",
+          text: "  -- Set Operators",
           "web-class": "alloy-toolbox-heading",
         },
         {
@@ -61,11 +71,16 @@ export const toolbox = {
       name: "Boolean",
       colour: "#8C0000",
       contents: [
+        {
+          kind: "label",
+          text: " ",
+          gap: 14,
+        },
         { kind: "block", type: "alloy_!" },
         { kind: "block", type: "alloy_set" },
         {
           kind: "label",
-          text: "-- Boolean Connectors --",
+          text: "  -- Boolean Connectors",
           "web-class": "alloy-toolbox-heading",
         },
         { kind: "block", type: "alloy_and" },
@@ -75,7 +90,7 @@ export const toolbox = {
 
         {
           kind: "label",
-          text: "-- Comparison Operators --",
+          text: "  -- Comparison Operators",
           "web-class": "alloy-toolbox-heading",
         },
         { kind: "block", type: "alloy_in" },
@@ -89,6 +104,11 @@ export const toolbox = {
       name: "Pred and Facts",
       colour: "#B38E4F",
       contents: [
+        {
+          kind: "label",
+          text: " ",
+          gap: 14,
+        },
         { kind: "block", type: "alloy_fact" },
         { kind: "block", type: "alloy_pred" },
         { kind: "block", type: "alloy_rule_line" },
@@ -100,7 +120,13 @@ export const toolbox = {
       colour: "#3BA61B",
       contents: [
         {
-          kind: "block", type: "alloy_run_{}"
+          kind: "label",
+          text: " ",
+          gap: 14,
+        },
+        {
+          kind: "block",
+          type: "alloy_run_{}",
         },
         { kind: "block", type: "alloy_run" },
         { kind: "block", type: "alloy_check" },

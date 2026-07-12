@@ -1,0 +1,300 @@
+/* ------------------------------------------------------------------ */
+/* Alloy Blockly Editor theme                                          */
+/* Palette lives in one place so toolbox/flyout/workspace/fields all   */
+/* read as one coherent dark "glass" surface instead of default Blockly*/
+/* ------------------------------------------------------------------ */
+:root {
+  --alloy-bg: #0b1220;
+  --alloy-bg-soft: #0f172a;
+  --alloy-surface: #141b2d;
+  --alloy-surface-2: #1e293b;
+  --alloy-border: #2a3550;
+  --alloy-accent: #f6ffb2;
+  --alloy-accent-strong: #6366f1;
+  --alloy-text: #e2e8f0;
+  --alloy-text-dim: #94a3b8;
+  --alloy-danger: #ef4444;
+  --alloy-shadow: rgba(0, 0, 0, 0.45);
+}
+
+/* ---------------------------- Workspace ---------------------------- */
+
+.blocklySvg {
+  background-color: var(--alloy-bg-soft);
+  border-radius: 20px;
+}
+
+.blocklyMainBackground {
+  fill: var(--alloy-bg-soft);
+  stroke: none;
+}
+
+.blocklyGridPattern {
+  stroke: rgba(0, 26, 255, 0.16);
+}
+
+.blocklyWorkspace {
+  cursor: default;
+}
+
+.blocklyBlockDragSurface {
+  filter: drop-shadow(0 6px 16px var(--alloy-shadow));
+}
+
+/* ----------------------------- Toolbox ------------------------------ */
+
+/* Blockly positions the flyout by measuring .blocklyToolbox's own rendered
+   width (a CSS transform on the flyout can't win — Blockly overwrites it with
+   an inline style every render), so padding-right here is what actually pushes
+   the flyout away. But painting that padding in the toolbox's own background
+   just reads as "wider toolbox", not a gap — the ::before below draws the
+   visible card only over the real content width, leaving the extra padding
+   transparent so the workspace canvas shows through as a real visual gap. */
+.blocklyToolbox {
+  position: absolute; /* already set by Blockly inline; kept explicit as the ::before's containing block */
+  isolation: isolate; /* gives ::before's z-index its own stacking context, scoped
+    to this element only, so it can't end up behind unrelated siblings like the workspace SVG */
+  background: var(--alloy-surface-2); /* Blockly's own base stylesheet sets this to #ddd — without
+    overriding it, that default gray shows through the transparent gap in the padding */
+  color: var(--alloy-text);
+  padding: 10px 46px 10px 6px;
+}
+
+.blocklyToolbox::before {
+  content: "";
+  position: absolute;
+  z-index: -1; /* without this it's a positioned descendant, which paints ABOVE
+    the toolbox's normal in-flow category content and hides it entirely */
+  inset: 0;
+  right: 40px;
+  filter: drop-shadow(4px 0 10px var(--alloy-shadow));
+  background: var(--alloy-surface-2); /* matches the flyout's own fill so the
+    card and the gap read as one continuous surface instead of two tones */
+  backdrop-filter: blur(10px);
+  box-shadow: 4px 0 18px var(--alloy-shadow);
+}
+
+.blocklyToolboxCategory {
+  margin-bottom: 10px;
+  transition:
+    background-color 0.15s ease,
+    transform 0.15s ease;
+  height: 40px;
+  display: grid;
+  align-items: center;
+}
+
+.blocklyToolboxCategory:hover {
+  background-color: rgba(129, 140, 248, 0.12);
+  transform: translateX(3px);
+}
+
+.blocklyToolboxCategorySelected {
+  background-color: rgba(129, 140, 248, 0.2) !important;
+  border-radius: 20px;
+  box-shadow: inset 3px 0 0 var(--alloy-accent);
+}
+
+.blocklyToolboxCategoryLabel {
+  font-weight: 600;
+  font-family: "Inter", system-ui, sans-serif;
+  font-size: 20px;
+  letter-spacing: 0.2px;
+  color: var(--alloy-text);
+}
+
+.blocklyToolboxCategoryIcon {
+  fill: var(--alloy-text-dim);
+}
+
+.blocklyToolboxCategoryIconOpen,
+.blocklyToolboxCategoryIconClosed {
+  transition: transform 0.15s ease;
+}
+
+.blocklyTreeSeparator {
+  border-bottom: 1px solid var(--alloy-border);
+  margin: 6px 8px;
+}
+
+.alloy-toolbox-heading {
+  font-family: "Inter", system-ui, sans-serif;
+  font-weight: 600;
+  font-size: 11px;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+  color: var(--alloy-accent);
+  opacity: 0.85;
+}
+
+/* ------------------------------ Flyout ------------------------------ */
+
+.blocklyFlyoutBackground {
+  fill: var(--alloy-surface-2);
+  filter: drop-shadow(4px 0 10px var(--alloy-shadow)); /* Shift shadow to account for gap */
+}
+
+.blocklyFlyoutLabelText {
+  fill: white;
+  font-family: "Inter", system-ui, sans-serif;
+  font-weight: 600;
+}
+
+.blocklyFlyoutButton .blocklyFlyoutButtonBackground {
+  fill: var(--alloy-accent-strong);
+  stroke: var(--alloy-accent);
+  transition: fill 0.15s ease;
+}
+
+.blocklyFlyoutButton:hover .blocklyFlyoutButtonBackground {
+  fill: var(--alloy-accent);
+}
+
+.blocklyFlyoutButtonShadow {
+  fill: rgba(0, 0, 0, 0.25);
+}
+
+/* ------------------------------ Blocks ------------------------------- */
+
+.blocklyPath {
+  stroke-width: 2px;
+}
+
+.blocklyPathDark {
+  fill-opacity: 0.15;
+}
+
+.blocklySelected > .blocklyPath,
+.blocklySelected > .blocklyPathLight {
+  stroke: var(--alloy-accent) !important;
+  stroke-width: 2px;
+}
+
+.blocklyHighlightedConnectionPath {
+  stroke: var(--alloy-accent) !important;
+  stroke-width: 3px;
+  filter: drop-shadow(0 0 4px var(--alloy-accent));
+}
+
+.blocklyDraggable {
+  cursor: grab;
+}
+
+.blocklyDragging {
+  cursor: grabbing;
+}
+
+/* ------------------------------ Fields -------------------------------- */
+
+.blocklyEditableField:hover > .blocklyFieldRect {
+  stroke: 2px solid black;
+}
+
+.blocklyFieldRect {
+  rx: 4px;
+  ry: 4px;
+}
+
+.blocklyDropdownRect {
+  stroke: var(--alloy-border);
+}
+
+.blocklyDropdownText {
+  fill: var(--alloy-text);
+  font-family: "Inter", system-ui, sans-serif;
+}
+
+.blocklyDropDownDiv {
+  background-color: var(--alloy-surface) !important;
+  border: 3px solid rgb(153, 152, 152) !important;
+  border-radius: 8px !important;
+  box-shadow: 0 8px 24px var(--alloy-shadow) !important;
+}
+
+.blocklyHtmlInput {
+  font-family: "Inter", system-ui, sans-serif;
+  border-radius: 4px;
+  border: 1px solid var(--alloy-accent);
+  color: var(--alloy-text);
+  background: var(--alloy-surface-2);
+}
+
+.blocklyTextarea {
+  font-family: "Inter", system-ui, sans-serif;
+}
+
+/* --------------------------- Comments / bubbles ------------------------ */
+
+.blocklyCommentTopbarBackground {
+  fill: var(--alloy-accent-strong);
+}
+
+.blocklyCommentText,
+.blocklyTextBubble {
+  fill: var(--alloy-surface);
+}
+
+.blocklyBubbleText {
+  fill: var(--alloy-text);
+  font-family: "Inter", system-ui, sans-serif;
+}
+
+.blocklyWarningIcon {
+  fill: #f59e0b;
+}
+
+/* ------------------------------ Scrollbars ------------------------------ */
+
+.blocklyScrollbarBackground {
+  fill: transparent;
+}
+
+.blocklyScrollbarHandle {
+  fill: var(--alloy-border);
+  fill-opacity: 0.8;
+  transition: fill 0.15s ease;
+}
+
+.blocklyScrollbarHandle:hover {
+  fill: var(--alloy-accent);
+}
+
+/* -------------------------- Zoom & trash controls ------------------------ */
+
+.blocklyZoom > image,
+.blocklyTrash > image {
+  opacity: 0.75;
+  transition:
+    opacity 0.15s ease,
+    transform 0.15s ease;
+}
+
+.blocklyZoom > image:hover,
+.blocklyTrash > image:hover {
+  opacity: 1;
+  transform: scale(1.08);
+}
+
+/* ---------------------------- Widgets / tooltip / toast -------------------- */
+
+.blocklyTooltipDiv {
+  background-color: var(--alloy-surface) !important;
+  color: var(--alloy-text) !important;
+  border: 1px solid var(--alloy-border) !important;
+  border-radius: 6px !important;
+  box-shadow: 0 6px 16px var(--alloy-shadow) !important;
+  font-family: "Inter", system-ui, sans-serif;
+  padding: 6px 10px !important;
+}
+
+.blocklyToast {
+  background-color: var(--alloy-surface) !important;
+  border: 1px solid var(--alloy-accent) !important;
+  border-radius: 8px !important;
+  box-shadow: 0 8px 24px var(--alloy-shadow) !important;
+}
+
+.blocklyToastMessage {
+  color: var(--alloy-text) !important;
+  font-family: "Inter", system-ui, sans-serif;
+}
