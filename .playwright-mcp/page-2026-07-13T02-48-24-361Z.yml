@@ -1,0 +1,11 @@
+- generic [ref=e2]:
+  - heading "Alloy Blockly Editor" [level=1] [ref=e4]
+  - generic [ref=e7]:
+    - tree [ref=e9]:
+      - treeitem "Signatures" [level=1] [ref=e10]
+      - treeitem "Expressions/Sets" [level=1] [ref=e12]
+      - treeitem "Boolean" [level=1] [ref=e14]
+      - treeitem "Pred and Facts" [level=1] [ref=e16]
+      - treeitem "Commands" [level=1] [ref=e18]
+    - img [ref=e20]:
+      - generic "Blockly Workspace" [ref=e21]

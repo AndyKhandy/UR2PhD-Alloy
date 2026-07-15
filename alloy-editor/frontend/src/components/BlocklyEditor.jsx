@@ -4,7 +4,10 @@ import "../blockly/blocks/index";
 import "../blockly/generators/indexG";
 import { toolbox } from "../blockly/toolbox";
 import { alloyGenerator } from "../blockly/generators/alloy_generator";
-import "../styles/blockly.css"
+import "../styles/blockly.css";
+import {Code, Trash, SquarePlay} from "lucide-react"
+
+
 
 export default function BlocklyEditor() {
   const blocklyDiv = useRef(null);
@@ -20,6 +23,13 @@ export default function BlocklyEditor() {
     workspaceRef.current = Blockly.inject(blocklyDiv.current, {
       renderer: "zelos",
       toolbox,
+      zoom: {
+        controls: true,
+        startScale: 0.9, // Default is 1.0
+        maxScale: 1,
+        minScale: 0.5,
+        scaleSpeed: 1.1,
+      },
     });
 
     return () => {
@@ -58,7 +68,6 @@ export default function BlocklyEditor() {
         throw new Error(`Server error: ${response.status}`);
       }
       const result = await response.json();
-      console.log(result);
       setRunResult(result);
     } catch (err) {
       setRunError(err.message);
@@ -68,16 +77,19 @@ export default function BlocklyEditor() {
   }
 
   return (
-    <div style={{ height: "100vh", display: "flex", flexDirection: "column" }}>
+    <div className="main" style={{ height: "100vh", display: "flex", flexDirection: "column" }}>
       <div ref={blocklyDiv} style={{ flex: 1 }} />
       <div className="buttons">
-        <button onClick={removeBlock}>Remove Blocks</button>
-        <button onClick={generateAlloy}>Generate Alloy</button>
+        <button onClick={removeBlock}><Trash color="red"/></button>
+        <button onClick={generateAlloy}><Code color="blue"></Code></button>
         <button onClick={runModel} disabled={isRunning}>
-          {isRunning ? "Running..." : "Run Model"}
+          <SquarePlay color="green" />
         </button>
       </div>
-      <pre>{alloyCode}</pre>
+      {alloyCode && (<div className="code">
+        <h4>Alloy Code</h4>
+        <pre>{alloyCode}</pre>
+      </div>)}
       {runError && (
         <div style={{ color: "red", padding: "8px" }}>Error: {runError}</div>
       )}

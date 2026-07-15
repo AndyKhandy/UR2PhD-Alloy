@@ -11,8 +11,6 @@ Blockly.Blocks["alloy_sig"] = {
 
     this.appendDummyInput().appendField("}");
 
-    this.setPreviousStatement(true);
-    this.setNextStatement(true);
 
     this.setColour(230);
     this.setTooltip(

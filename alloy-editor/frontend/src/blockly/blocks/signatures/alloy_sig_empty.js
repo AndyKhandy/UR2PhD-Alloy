@@ -7,8 +7,6 @@ Blockly.Blocks["alloy_sig_empty"] = {
       .appendField(new Blockly.FieldTextInput("Person"), "NAME")
       .appendField("{ }");
 
-    this.setPreviousStatement(true);
-    this.setNextStatement(true);
 
     this.setColour(230);
     this.setTooltip(

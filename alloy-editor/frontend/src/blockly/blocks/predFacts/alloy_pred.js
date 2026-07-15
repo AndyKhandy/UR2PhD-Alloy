@@ -10,9 +10,7 @@ Blockly.Blocks["alloy_pred"] = {
     this.appendStatementInput("BODY").setCheck("LogicalStatement");
 
     this.appendDummyInput().appendField("}");
-
-    this.setPreviousStatement(true);
-    this.setNextStatement(true);
+    
     this.setInputsInline(true);
     this.setColour("B38E4F");
     this.setTooltip(

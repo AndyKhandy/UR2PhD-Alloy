@@ -98,7 +98,7 @@
 .blocklyToolboxCategoryLabel {
   font-weight: 600;
   font-family: "Inter", system-ui, sans-serif;
-  font-size: 20px;
+  font-size: 16px;
   letter-spacing: 0.2px;
   color: var(--alloy-text);
 }
@@ -131,7 +131,6 @@
 
 .blocklyFlyoutBackground {
   fill: var(--alloy-surface-2);
-  filter: drop-shadow(4px 0 10px var(--alloy-shadow)); /* Shift shadow to account for gap */
 }
 
 .blocklyFlyoutLabelText {
@@ -297,4 +296,41 @@
 .blocklyToastMessage {
   color: var(--alloy-text) !important;
   font-family: "Inter", system-ui, sans-serif;
+}
+
+.main {
+  position: relative;
+}
+
+
+.buttons{
+  position: absolute;
+  right: 15px;
+  top: -10px;
+  border-radius: 10px;
+  display: flex;
+  gap: 5px;
+}
+
+
+button {
+  background-color: rgb(255, 255, 255);
+  cursor: pointer;
+  padding: 2px;
+  border:none;
+  border-radius: 2px;
+  transition: 200ms ease in;
+}
+
+button:hover {
+  scale: 1.2;
+  background-color: rgb(0, 0, 0);
+}
+
+.main {
+  color: white;
+}
+
+.code {
+  margin-top: 10px;
 }

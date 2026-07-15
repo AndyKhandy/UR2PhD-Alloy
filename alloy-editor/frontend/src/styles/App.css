@@ -7,4 +7,33 @@
 #root {
   height: 100%;
   padding: 30px 50px;
+  background-color: rgb(3, 13, 27);
+    font-family: "Ubuntu", sans-serif;
+}
+
+.header{
+  display: flex;
+  justify-content: center;
+}
+
+h1{
+  color: white;
+  margin-bottom: 10px;
+  width: fit-content;
+  position: relative;
+}
+
+h1::before {
+  content: "";
+  display: block;
+  width: 0px;
+  background-color: white;
+  height: 2px;
+  position: absolute;
+  bottom: 0px;
+   transition: 200ms ease-in;
+}
+
+h1:hover::before {
+  width: 100%;
 }
