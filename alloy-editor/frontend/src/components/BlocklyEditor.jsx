@@ -68,6 +68,7 @@ export default function BlocklyEditor() {
         throw new Error(`Server error: ${response.status}`);
       }
       const result = await response.json();
+      console.log(result);
       setRunResult(result);
     } catch (err) {
       setRunError(err.message);
@@ -95,6 +96,7 @@ export default function BlocklyEditor() {
       )}
       {runResult && (
         <div style={{ padding: "8px", fontFamily: "monospace" }}>
+          <h4>Alloy Result</h4>
           <strong>
             Status:{" "}
             {runResult.satisfiable ? "SATISFIABLE ✓" : "UNSATISFIABLE ✗"}

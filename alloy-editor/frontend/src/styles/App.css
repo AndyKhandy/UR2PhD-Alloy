@@ -1,22 +1,50 @@
 * {
-    margin: 0px;
-    padding: 0px;
-    box-sizing: border-box;
+  margin: 0px;
+  padding: 0px;
+  box-sizing: border-box;
 }
 
 #root {
   height: 100%;
   padding: 30px 50px;
   background-color: rgb(3, 13, 27);
-    font-family: "Ubuntu", sans-serif;
+  font-family: "Ubuntu", sans-serif;
 }
 
-.header{
+.header {
   display: flex;
   justify-content: center;
+  align-items: center;
+  position: relative;
+  margin-bottom: 20px;
 }
 
-h1{
+.header-btns {
+  position: absolute;
+  right: 0px;
+  top: 0px;
+}
+
+.header-btn {
+  padding: 6px;
+  background-color: grey;
+}
+
+.header-btn.active{
+  background-color: white;
+}
+
+.header-btn:first-of-type{
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+}
+
+.header-btn:last-of-type{
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+}
+
+h1 {
   color: white;
   margin-bottom: 10px;
   width: fit-content;
@@ -31,9 +59,14 @@ h1::before {
   height: 2px;
   position: absolute;
   bottom: 0px;
-   transition: 200ms ease-in;
+  transition: 200ms ease-in;
 }
 
 h1:hover::before {
   width: 100%;
+}
+
+.graphContainer {
+  display: flex;
+  justify-content: center;
 }

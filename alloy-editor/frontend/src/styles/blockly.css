@@ -313,7 +313,7 @@
 }
 
 
-button {
+.buttons button {
   background-color: rgb(255, 255, 255);
   cursor: pointer;
   padding: 2px;
@@ -322,7 +322,7 @@ button {
   transition: 200ms ease in;
 }
 
-button:hover {
+.buttons button:hover {
   scale: 1.2;
   background-color: rgb(0, 0, 0);
 }
