@@ -27,12 +27,18 @@
 
 .header-btn {
   padding: 6px;
-  background-color: grey;
+  background-color: rgb(255, 255, 255);
   font-family: "Ubuntu", sans-serif;
+  opacity: 0.6;
+  cursor: pointer;
+}
+
+.header-btn:not(.active):hover{
+  opacity: 0.8;
 }
 
 .header-btn.active{
-  background-color: white;
+  opacity: 1;
 }
 
 .header-btn:first-of-type{

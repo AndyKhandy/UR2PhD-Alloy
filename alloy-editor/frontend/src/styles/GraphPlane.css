@@ -1,28 +1,78 @@
 .react-flow__controls {
-    border-radius: 12px;
-    overflow: hidden;
-    box-shadow: 0 4px 10px rgba(0,0,0,.2);
-    gap: 5px;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  gap: 5px;
 }
 
 .react-flow__controls-button {
-    width: 40px;
-    height: 40px;
+  width: 40px;
+  height: 40px;
 
-    background: #1f2937;
-    color: white;
+  background: #1f2937;
+  color: white;
 
-    border: none;
+  border: none;
 
-    transition: background .2s;
+  transition: background 0.2s;
 }
 
 .react-flow__controls-button:hover {
-    background: #374151;
-    scale: 1;
+  background: #374151;
+  scale: 1;
 }
 
 .react-flow__controls-button svg {
-    width: 18px;
-    height: 18px;
+  width: 18px;
+  height: 18px;
+}
+
+.react-flow__node {
+  background-color: rgb(171, 233, 255);
+  color: rgb(0, 0, 0);
+  border-radius: 10px;
+  font-weight: bolder;
+  text-transform: uppercase;
+  width: 150px;
+  height: 50px;
+  display: grid;
+  place-items: center;
+}
+
+.react-flow__node:hover {
+  border: 1px solid white;
+}
+
+.react-flow__handle {
+  opacity: 0;
+}
+
+.react-flow__edge-text {
+    font-size: 8px;
+    font-weight: 600;
+    fill: #fbfcfd;
+    letter-spacing: 0.2px;
+    transform: translate(20px, -10px);
+}
+
+.react-flow__edge-textbg {
+    fill: transparent;
+}
+
+.react-flow__edge-path {
+  stroke: #555;
+  stroke-width: 2;
+}
+
+.react-flow__edge {
+  cursor: pointer;
+}
+
+
+.react-flow__edge.selected .react-flow__edge-path {
+  stroke-width: 3;
+}
+
+.react-flow__edge:hover .react-flow__edge-path {
+  stroke: #ffffff;
 }

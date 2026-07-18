@@ -7,17 +7,12 @@ import {
   applyEdgeChanges,
   addEdge,
   MiniMap,
-  Panel
+  Panel,
 } from "@xyflow/react";
 import "@xyflow/react/dist/style.css";
-import "../styles/GraphPlane.css"
+import "../styles/GraphPlane.css";
 
-
-
-
-export default function GraphPlane({nodes,edges, setEdges,setNodes}) {
-
-
+export default function GraphPlane({ nodes, edges, setEdges, setNodes }) {
   const onNodesChange = useCallback(
     (changes) =>
       setNodes((nodesSnapshot) => applyNodeChanges(changes, nodesSnapshot)),
@@ -53,9 +48,18 @@ export default function GraphPlane({nodes,edges, setEdges,setNodes}) {
         }}
       >
         <Background></Background>
-        <MiniMap></MiniMap>
+        <MiniMap
+          bgColor="#000000"
+          maskColor="rgba(82, 157, 242, 0.15)"
+          nodeStrokeColor="#fdfdff"
+          nodeStrokeWidth={1}
+          nodeBorderRadius={4}
+          pannable
+          zoomable
+          nodeColor={(node) => node.data.color}
+        />
         <Panel position="top-left">
-            <h1>Alloy Result</h1>
+          <h1>Alloy Result</h1>
         </Panel>
         <Controls></Controls>
       </ReactFlow>
