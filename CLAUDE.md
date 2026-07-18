@@ -14,6 +14,7 @@ A block-based visual editor for the [Alloy](https://alloytools.org/) formal mode
 npm run dev       # Vite dev server (hot reload)
 npm run build     # production build
 npm run lint      # ESLint check
+npm test          # run vitest (watch mode; pass `run` for a single pass, e.g. `npx vitest run`)
 ```
 
 **Backend** — run from `alloy-editor/backend/`:
@@ -40,6 +41,8 @@ mvn install:install-file -Dfile="C:\...\alloy-editor\backend\lib\alloy.jar" -Dgr
 alloy-editor/frontend/src/
   App.jsx                        # root — renders <BlocklyEditor />
   components/BlocklyEditor.jsx   # workspace, Generate/Clear buttons, <pre> output
+  components/GraphPlane.jsx      # React Flow canvas; currently renders static placeholder nodes/edges, not yet wired to graphConverter output
+  utils/graphConverter.js        # AlloyResult -> React Flow nodes/edges (see Graph conversion below)
   blockly/
     toolbox.js                   # sidebar category/block layout
     blocks/                      # block shape definitions per category
@@ -56,6 +59,12 @@ alloy-editor/frontend/src/
 **`setCheck` types:** `"Relation"` (connects inside sig body), `"LogicalStatement"` (connects inside pred/fact body).
 
 **Toolbox colors:** Signatures `#5C81A6` · Expressions/Sets `#00058C` · Boolean `#8C0000` · Pred/Facts `#B38E4F` · Commands `#3BA61B`.
+
+**Graph conversion (`utils/graphConverter.js`):** turns an `AlloyResult` into React Flow's `{ nodes, edges }` shape.
+- `convertToNodes(atoms)` — one node per atom, grouped by signature; `id` is the atom name (e.g. `"Person$0"`), `data.signature` is the owning signature name.
+- `convertToEdges(relations)` — one edge per relation tuple; `id` is `` `${source}-${fieldName}-${target}` `` (must include `fieldName`, not just `source`/`target`, so two different fields linking the same atom pair don't collide), `label` is the field name.
+- `getNodesAndEdges(alloyResult)` composes the two — **known bug:** it currently discards both functions' return values and its `satisfiable` check is inverted, so it always returns `null`; not yet wired into `GraphPlane.jsx`.
+- Tests: `utils/graphConverter.test.js` (vitest) covers empty/single/multi-signature atoms and duplicate-field-same-atoms edge cases.
 
 ### Backend
 
@@ -77,7 +86,7 @@ alloy-editor/backend/
 
 **REST endpoint:** `POST http://localhost:8080/run-model`
 - Request body: `{ "modelText": "sig Person {} run { some Person } for 3" }`
-- Response: `{ "satisfiable": true, "atoms": { "this/Person": ["Person$0"] }, "relations": [] }`
+- Response: `{ "satisfiable": true, "atoms": { "this/Person": ["Person$0", "Person$1"] }, "relations": [{ "fieldName": "friends", "source": "Person$0", "target": "Person$1" }] }`
 
 **AlloyRunner flow:**
 1. `CompUtil.parseEverything_fromString(reporter, modelText)` → `CompModule`

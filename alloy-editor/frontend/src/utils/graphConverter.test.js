@@ -1,0 +1,156 @@
+import { describe, it, expect } from "vitest";
+import { convertToNodes, convertToEdges } from "./graphConverter";
+
+describe("convertToNodes", () => {
+  it("returns an empty array when atoms is empty", () => {
+    expect(convertToNodes({})).toEqual([]);
+  });
+
+  it("builds one node per atom for a single signature", () => {
+    const atoms = { Person: ["Person$0", "Person$1"] };
+
+    expect(convertToNodes(atoms)).toEqual([
+      {
+        id: "Person$0",
+        position: { x: 100, y: 100 },
+        data: { label: "Person$0", signature: "Person" },
+      },
+      {
+        id: "Person$1",
+        position: { x: 100, y: 200 },
+        data: { label: "Person$1", signature: "Person" },
+      },
+    ]);
+  });
+
+  it("skips a signature with no atoms but still processes the rest", () => {
+    const atoms = { Person: [], Dog: ["Dog$0"] };
+
+    expect(convertToNodes(atoms)).toEqual([
+      {
+        id: "Dog$0",
+        position: { x: 200, y: 200 },
+        data: { label: "Dog$0", signature: "Dog" },
+      },
+    ]);
+  });
+
+  it("builds nodes across multiple signatures, offsetting position by signature and instance index", () => {
+    const atoms = {
+      Person: ["Person$0", "Person$1"],
+      Dog: ["Dog$0"],
+    };
+
+    expect(convertToNodes(atoms)).toEqual([
+      {
+        id: "Person$0",
+        position: { x: 100, y: 100 },
+        data: { label: "Person$0", signature: "Person" },
+      },
+      {
+        id: "Person$1",
+        position: { x: 100, y: 200 },
+        data: { label: "Person$1", signature: "Person" },
+      },
+      {
+        id: "Dog$0",
+        position: { x: 200, y: 200 },
+        data: { label: "Dog$0", signature: "Dog" },
+      },
+    ]);
+  });
+
+  it("preserves duplicate atom ids across signatures instead of merging them", () => {
+    const atoms = {
+      Person: ["Shared$0"],
+      Dog: ["Shared$0"],
+    };
+
+    const nodes = convertToNodes(atoms);
+
+    expect(nodes).toHaveLength(2);
+    expect(nodes.map((n) => n.id)).toEqual(["Shared$0", "Shared$0"]);
+    expect(nodes[0].data.signature).toBe("Person");
+    expect(nodes[1].data.signature).toBe("Dog");
+  });
+
+  it("gives every atom within a signature a distinct, non-zero position", () => {
+    const atoms = { Person: ["Person$0", "Person$1", "Person$2"] };
+
+    const nodes = convertToNodes(atoms);
+
+    expect(nodes).toHaveLength(3);
+    expect(nodes.map((n) => n.position)).toEqual([
+      { x: 100, y: 100 },
+      { x: 100, y: 200 },
+      { x: 100, y: 300 },
+    ]);
+    const ys = nodes.map((n) => n.position.y);
+    expect(new Set(ys).size).toBe(ys.length);
+  });
+});
+
+describe("convertToEdges", () => {
+  it("returns an empty array when relations is empty", () => {
+    expect(convertToEdges([])).toEqual([]);
+  });
+
+  it("builds one edge per relation, labeled with the field name", () => {
+    const relations = [
+      { fieldName: "friends", source: "Person$0", target: "Person$1" },
+    ];
+
+    expect(convertToEdges(relations)).toEqual([
+      {
+        id: "Person$0-friends-Person$1",
+        source: "Person$0",
+        target: "Person$1",
+        label: "friends",
+      },
+    ]);
+  });
+
+  it("gives distinct ids to different fields linking the same pair of atoms", () => {
+    const relations = [
+      { fieldName: "friends", source: "Person$0", target: "Person$1" },
+      { fieldName: "spouse", source: "Person$0", target: "Person$1" },
+    ];
+
+    const edges = convertToEdges(relations);
+
+    expect(edges).toHaveLength(2);
+    const ids = edges.map((e) => e.id);
+    expect(new Set(ids).size).toBe(ids.length);
+    expect(edges.map((e) => e.label)).toEqual(["friends", "spouse"]);
+  });
+
+  it("handles a self-loop relation (source === target)", () => {
+    const relations = [
+      { fieldName: "self", source: "Person$0", target: "Person$0" },
+    ];
+
+    expect(convertToEdges(relations)).toEqual([
+      {
+        id: "Person$0-self-Person$0",
+        source: "Person$0",
+        target: "Person$0",
+        label: "self",
+      },
+    ]);
+  });
+
+  it("builds multiple edges across different atom pairs", () => {
+    const relations = [
+      { fieldName: "friends", source: "Person$0", target: "Person$1" },
+      { fieldName: "owns", source: "Person$0", target: "Dog$0" },
+    ];
+
+    const edges = convertToEdges(relations);
+
+    expect(edges).toHaveLength(2);
+    expect(edges.map((e) => e.id)).toEqual([
+      "Person$0-friends-Person$1",
+      "Person$0-owns-Dog$0",
+    ]);
+  });
+});

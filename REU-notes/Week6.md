@@ -35,6 +35,9 @@ Every Node Needs
     data
 }
 
+
+#### BACKEND RESPONSE
+
 {
   "atoms": [
     "Person$0",
@@ -98,3 +101,14 @@ The Controls component renders buttons with classes like:
 
 .react-flow__controls-interactive
 ```
+
+### CONCEPTS I LEARNED
+
+* Am I just changing each item?
+  Use map().
+* Do I already have an array of arrays that I want to flatten?
+  Use flat().
+* Am I creating arrays inside a map() and then immediately flattening them?
+  Use flatMap().
+
+Object.entries() is a static JavaScript method that transforms an object into an array of its own enumerable string-keyed property [key, value] pairs. [That's why you usually use it with a for loop or .map()]

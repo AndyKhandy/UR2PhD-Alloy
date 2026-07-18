@@ -28,6 +28,7 @@
 .header-btn {
   padding: 6px;
   background-color: grey;
+  font-family: "Ubuntu", sans-serif;
 }
 
 .header-btn.active{
