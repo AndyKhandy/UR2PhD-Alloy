@@ -112,7 +112,7 @@ they're `.blocklyToolbox`/`.blocklyToolboxCategoryLabel`/`.blocklyToolboxCategor
 .blocklyDebugFilter .blocklyMinimalBody .blocklyNoPointerEvents
 .blocklySelectedGlowFilter .blocklyReplacementGlowFilter .blocklyVerticalMarker
 
-### Updated Workflow
+### Updated Workflow Overview
 
 ```text
 Blockly Workspace
@@ -159,7 +159,7 @@ React Flow + ELK.js
 Interactive Alloy Instance Visualization
 ```
 
-# Recommended Visualization Stack
+# Recommended Visualization Stack Overview
 
 React Flow
 
@@ -180,52 +180,3 @@ Responsibilities:
 - compute graph layout
 - determine node positions
 - produce readable hierarchical layouts
-
-```text
-{
-  "atoms": [
-    "Person$0",
-    "Person$1"
-  ],
-
-  "relations":[
-    {
-      "field":"friends",
-      "source":"Person$0",
-      "target":"Person$1"
-    }
-  ]
-}
-
-changed to 
-
-const nodes =
-[
-{
-id:"Person$0",
-data:{label:"Person$0"},
-position:{x:100,y:100}
-},
-
-{
-id:"Person$1",
-data:{label:"Person$1"},
-position:{x:350,y:100}
-}
-];
-
-and 
-
-const edges =
-[
-{
-id:"1",
-
-source:"Person$0",
-
-target:"Person$1",
-
-label:"friends"
-}
-];
-```

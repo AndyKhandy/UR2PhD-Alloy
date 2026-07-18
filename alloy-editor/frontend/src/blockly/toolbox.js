@@ -4,7 +4,7 @@ export const toolbox = {
     {
       kind: "category",
       name: "Signatures",
-      colour: "#5C81A6",
+      colour: "#6c68dc",
       contents: [
         {
           kind: "label",

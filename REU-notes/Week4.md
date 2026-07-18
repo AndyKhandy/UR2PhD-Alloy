@@ -1,5 +1,4 @@
 
-Recap the previous week’s plan. This helps you determine whether you accomplished your goals.
 The previous week’s plan (the week of 6/22/2026 - 6/29/2026) involved compiling an Alloy model from 
 string text, executing a command and getting the textual output, and improving block designs. 
 Basically, it was to connecting the frontend and backend in a way that the JavaScript string text could 
@@ -30,5 +29,3 @@ fix the issue of words not being inline [https://docs.blockly.com/guides/create-
 • Research more about JavaScript libraries that allow for graphs or visual representations of the 
 Alloy Analyzer response (the relations of atoms) (Ex Person$1 -> Person$2) [Something like 
 Recharts or Chart.js]
-[The report need not be onerous. Minimize details that are not relevant to your audience, such as 
-classwork and the like, in order to keep the report focused; you will spend less time writing it, and make it
