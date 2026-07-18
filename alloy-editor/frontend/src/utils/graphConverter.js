@@ -1,8 +1,10 @@
+import { MarkerType } from "@xyflow/react";
+
 export default function getNodesAndEdges(alloyResult) {
   if (alloyResult.satisfiable) {
     return [convertToNodes(alloyResult.atoms),convertToEdges(alloyResult.relations)]
   } else {
-    return null;
+    return [[],[]];
   }
 }
 
@@ -23,6 +25,9 @@ export function convertToEdges(relations) {
     id: `${relation.source}-${relation.fieldName}-${relation.target}`,
     source: relation.source,
     target: relation.target,
-    label: relation.fieldName
+    label: relation.fieldName,
+    markerEnd: {
+      type: MarkerType.ArrowClosed,
+    },
   }))
 }

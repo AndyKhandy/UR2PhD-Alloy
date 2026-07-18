@@ -5,15 +5,15 @@ import "../blockly/generators/indexG";
 import { toolbox } from "../blockly/toolbox";
 import { alloyGenerator } from "../blockly/generators/alloy_generator";
 import "../styles/blockly.css";
+import getNodesAndEdges from "../utils/graphConverter";
 import {Code, Trash, SquarePlay} from "lucide-react"
 
 
 
-export default function BlocklyEditor() {
+export default function BlocklyEditor({setNodes, setEdges, setIsEditor}) {
   const blocklyDiv = useRef(null);
   const workspaceRef = useRef(null);
   const [alloyCode, setAlloyCode] = useState("");
-  const [runResult, setRunResult] = useState(null);
   const [isRunning, setIsRunning] = useState(false);
   const [runError, setRunError] = useState(null);
 
@@ -38,24 +38,23 @@ export default function BlocklyEditor() {
     };
   }, []);
 
-  const removeBlock = () => {
+  const removeBlocks = () => {
     workspaceRef.current.clear();
+    setNodes([]);
+    setEdges([]);
     setAlloyCode("");
-    setRunResult(null);
     setRunError(null);
   };
 
   function generateAlloy() {
     const code = alloyGenerator.workspaceToCode(workspaceRef.current);
     setAlloyCode(code);
-    setRunResult(null);
     setRunError(null);
   }
 
   async function runModel() {
     const code = alloyGenerator.workspaceToCode(workspaceRef.current);
     setAlloyCode(code);
-    setRunResult(null);
     setRunError(null);
     setIsRunning(true);
     try {
@@ -68,11 +67,15 @@ export default function BlocklyEditor() {
         throw new Error(`Server error: ${response.status}`);
       }
       const result = await response.json();
+      const [nodes,edges] = getNodesAndEdges(result)
+      console.log(nodes,edges);
       console.log(result);
-      setRunResult(result);
+      setEdges(edges);
+      setNodes(nodes);
     } catch (err) {
       setRunError(err.message);
     } finally {
+      setIsEditor(false);
       setIsRunning(false);
     }
   }
@@ -81,7 +84,7 @@ export default function BlocklyEditor() {
     <div className="main" style={{ height: "100vh", display: "flex", flexDirection: "column" }}>
       <div ref={blocklyDiv} style={{ flex: 1 }} />
       <div className="buttons">
-        <button onClick={removeBlock}><Trash color="red"/></button>
+        <button onClick={removeBlocks}><Trash color="red"/></button>
         <button onClick={generateAlloy}><Code color="blue"></Code></button>
         <button onClick={runModel} disabled={isRunning}>
           <SquarePlay color="green" />
@@ -91,38 +94,6 @@ export default function BlocklyEditor() {
         <h4>Alloy Code</h4>
         <pre>{alloyCode}</pre>
       </div>)}
-      {runError && (
-        <div style={{ color: "red", padding: "8px" }}>Error: {runError}</div>
-      )}
-      {runResult && (
-        <div style={{ padding: "8px", fontFamily: "monospace" }}>
-          <h4>Alloy Result</h4>
-          <strong>
-            Status:{" "}
-            {runResult.satisfiable ? "SATISFIABLE ✓" : "UNSATISFIABLE ✗"}
-          </strong>
-          {runResult.satisfiable && (
-            <>
-              {Object.entries(runResult.atoms).map(([sig, atoms]) => (
-                <div key={sig} style={{ marginTop: "4px" }}>
-                  <em>{sig}</em>:{" "}
-                  {atoms.length > 0 ? atoms.join(", ") : "(empty)"}
-                </div>
-              ))}
-              {runResult.relations.length > 0 && (
-                <div style={{ marginTop: "4px" }}>
-                  <strong>Relations:</strong>
-                  {runResult.relations.map((r, i) => (
-                    <div key={i} style={{ marginLeft: "12px" }}>
-                      {r.fieldName}: {r.source} → {r.target}
-                    </div>
-                  ))}
-                </div>
-              )}
-            </>
-          )}
-        </div>
-      )}
     </div>
   );
 }

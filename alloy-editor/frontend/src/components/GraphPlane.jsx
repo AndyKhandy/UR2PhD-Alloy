@@ -13,19 +13,10 @@ import "@xyflow/react/dist/style.css";
 import "../styles/GraphPlane.css"
 
 
-const initialNodes = [
-  { id: "n1", position: { x: 0, y: 0 }, data: { label: "Node 1" }, type: "input"},
-  { id: "n2", position: { x: 100, y: 100 }, data: { label: "Node 2" } },
-  { id: "n3", position: { x: 0, y: 200 }, data: { label: "Node 3" } },
-];
-const initialEdges = [
-  { id: "n1-n2", source: "n1", target: "n2", label: "Howdy" },
-  { id: "n1-n3", source: "n1", target: "n3" },
-];
 
-export default function GraphPlane() {
-  const [nodes, setNodes] = useState(initialNodes);
-  const [edges, setEdges] = useState(initialEdges);
+
+export default function GraphPlane({nodes,edges, setEdges,setNodes}) {
+
 
   const onNodesChange = useCallback(
     (changes) =>
