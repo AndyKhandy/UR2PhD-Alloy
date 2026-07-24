@@ -12,13 +12,13 @@ import layoutNodes from "../utils/layout/layoutNodes";
 export default function BlocklyEditor({
   setNodes,
   setEdges,
-  setIsEditor,
+  changeMode,
   setOriginalGraph,
   savedWorkspaceRef,
+  setAlloyCode,
 }) {
   const blocklyDiv = useRef(null);
   const workspaceRef = useRef(null);
-  const [alloyCode, setAlloyCode] = useState("");
   const [isRunning, setIsRunning] = useState(false);
   const [runError, setRunError] = useState(null);
 
@@ -78,37 +78,43 @@ export default function BlocklyEditor({
 
   function generateAlloy() {
     const code = alloyGenerator.workspaceToCode(workspaceRef.current);
-    setAlloyCode(code);
-    setRunError(null);
+    if (code) {
+      setAlloyCode(code);
+      console.log(code);
+      changeMode("code");
+      setRunError(null);
+    }
   }
 
   async function runModel() {
     const code = alloyGenerator.workspaceToCode(workspaceRef.current);
-    setAlloyCode(code);
-    setRunError(null);
-    setIsRunning(true);
-    try {
-      const response = await fetch("http://localhost:8080/run-model", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ modelText: code }),
-      });
-      if (!response.ok) {
-        throw new Error(`Server error: ${response.status}`);
+    if (code) {
+      setAlloyCode(code);
+      setRunError(null);
+      setIsRunning(true);
+      try {
+        const response = await fetch("http://localhost:8080/run-model", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ modelText: code }),
+        });
+        if (!response.ok) {
+          throw new Error(`Server error: ${response.status}`);
+        }
+        const result = await response.json();
+        const [nodes, edges] = getNodesAndEdges(result);
+        const updatedNodes = await layoutNodes(nodes, edges);
+        console.log(nodes, edges, updatedNodes);
+        console.log(result);
+        setNodes(updatedNodes);
+        setEdges(edges);
+        setOriginalGraph({ nodes: updatedNodes, edges });
+      } catch (err) {
+        setRunError(err.message);
+      } finally {
+        changeMode("graph");
+        setIsRunning(false);
       }
-      const result = await response.json();
-      const [nodes, edges] = getNodesAndEdges(result);
-      const updatedNodes = await layoutNodes(nodes, edges);
-      console.log(nodes, edges, updatedNodes);
-      console.log(result);
-      setNodes(updatedNodes);
-      setEdges(edges);
-      setOriginalGraph({ nodes: updatedNodes, edges });
-    } catch (err) {
-      setRunError(err.message);
-    } finally {
-      setIsEditor(false);
-      setIsRunning(false);
     }
   }
 
@@ -129,12 +135,6 @@ export default function BlocklyEditor({
           <SquarePlay color="green" />
         </button>
       </div>
-      {alloyCode && (
-        <div className="code">
-          <h4>Alloy Code</h4>
-          <pre>{alloyCode}</pre>
-        </div>
-      )}
     </div>
   );
 }

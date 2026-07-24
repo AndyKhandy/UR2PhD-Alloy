@@ -1,5 +1,5 @@
 import { MarkerType } from "@xyflow/react";
-import { HANDLE_COUNT } from "../../components/graph/AlloyNode";
+import { sigColors, HANDLE_COUNT } from "../data";
 
 export default function getNodesAndEdges(alloyResult) {
   if (alloyResult.satisfiable) {
@@ -15,11 +15,13 @@ export default function getNodesAndEdges(alloyResult) {
 export function convertToNodes(atoms) {
   return Object.entries(atoms).flatMap(([name, instances], index) =>
     instances.map((instance, instanceIndex) => {
+      console.log(sigColors[index]);
       return {
         id: instance,
         type: "alloy",
         position: { x: 0, y: 0 },
-        data: { label: instance, signature: name },
+        data: { label: instance, signature: name, color: sigColors[index] },
+        style: { background: sigColors[index] },
       };
     }),
   );
@@ -42,6 +44,8 @@ export function convertToEdges(relations) {
       type: isSelfLoop ? "selfLoop" : "default",
       markerEnd: {
         type: MarkerType.ArrowClosed,
+        width: 15,
+        height: 15,
       },
     };
   });

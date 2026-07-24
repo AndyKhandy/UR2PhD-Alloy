@@ -1,4 +1,4 @@
-import { NODE_WIDTH, NODE_HEIGHT } from "../../components/graph/AlloyNode";
+import { NODE_WIDTH, NODE_HEIGHT } from "../data";
 
 export default function convertToElkGraph(flowNodes, flowEdges) {
   const elkNodes = flowNodes.map((node) => {
@@ -23,8 +23,8 @@ export default function convertToElkGraph(flowNodes, flowEdges) {
       "elk.algorithm": "layered",
       "elk.direction": "DOWN",
 
-      "elk.spacing.nodeNode": "80",
-      "elk.spacing.edgeNode": "40",
+      "elk.spacing.nodeNode": "100",
+      "elk.spacing.edgeNode": "60",
       "elk.layered.spacing.nodeNodeBetweenLayers": "120",
 
       "elk.layered.crossingMinimization.strategy": "LAYER_SWEEP",

@@ -1,19 +1,26 @@
 import BlocklyEditor from "./components/BlocklyEditor";
 import GraphPlane from "./components/GraphPlane";
+import CodeView from "./components/CodeView";
 import "./styles/App.css";
 import { useState, useRef } from "react";
-import { useNodesState,useEdgesState, useReactFlow } from "@xyflow/react";
-import { initialEdges,initialNodes } from "./utils/demoResult";
+import { useNodesState, useEdgesState, useReactFlow } from "@xyflow/react";
+import { initialEdges, initialNodes, initialCode } from "./utils/demoResult";
 
 function App() {
-  const [isEditor, setIsEditor] = useState(true);
+  const [mode, setMode] = useState("editor");
   const [nodes, setNodes] = useState(initialNodes);
   const [edges, setEdges] = useState(initialEdges);
-  const [originalGraph, setOriginalGraph] = useState({nodes: initialNodes,edges: initialEdges})
-  const savedWorkspaceRef = useRef({blocks: {languageVersion: 0, blocks: []}})
+  const [alloyCode, setAlloyCode] = useState(initialCode);
+  const [originalGraph, setOriginalGraph] = useState({
+    nodes: initialNodes,
+    edges: initialEdges,
+  });
+  const savedWorkspaceRef = useRef({
+    blocks: { languageVersion: 0, blocks: [] },
+  });
 
-  const changeMode = () => {
-    setIsEditor(!isEditor);
+  const changeMode = (modeClicked) => {
+    setMode(modeClicked);
   };
 
   return (
@@ -22,24 +29,45 @@ function App() {
         <h1>AlloyBlocks</h1>
         <div className="header-btns">
           <button
-            onClick={changeMode}
-            className={`header-btn ${isEditor ? "active" : ""}`}
+            onClick={() => changeMode("editor")}
+            className={`header-btn ${mode == "editor" ? "active" : ""}`}
           >
             Editor
           </button>
           <button
-            onClick={changeMode}
-            className={`header-btn ${!isEditor ? "active" : ""}`}
+            onClick={() => changeMode("code")}
+            className={`header-btn ${mode == "code" ? "active" : ""}`}
+          >
+            Code
+          </button>
+          <button
+            onClick={() => changeMode("graph")}
+            className={`header-btn ${mode == "graph" ? "active" : ""}`}
           >
             Result
           </button>
         </div>
       </div>
-      {isEditor ? (
-        <BlocklyEditor setEdges={setEdges} setNodes={setNodes} setIsEditor={setIsEditor} setOriginalGraph={setOriginalGraph} savedWorkspaceRef={savedWorkspaceRef}></BlocklyEditor>
-      ) : (
+      {mode == "editor" && (
+        <BlocklyEditor
+          setEdges={setEdges}
+          setNodes={setNodes}
+          changeMode={changeMode}
+          setOriginalGraph={setOriginalGraph}
+          savedWorkspaceRef={savedWorkspaceRef}
+          setAlloyCode={setAlloyCode}
+        ></BlocklyEditor>
+      )}
+      {mode == "code" && <CodeView alloyCode={alloyCode}></CodeView>}
+      {mode == "graph" && (
         <div className="graphContainer">
-          <GraphPlane nodes={nodes} edges={edges}setNodes={setNodes} setEdges={setEdges} originalGraph={originalGraph}></GraphPlane>
+          <GraphPlane
+            nodes={nodes}
+            edges={edges}
+            setNodes={setNodes}
+            setEdges={setEdges}
+            originalGraph={originalGraph}
+          ></GraphPlane>
         </div>
       )}
     </>

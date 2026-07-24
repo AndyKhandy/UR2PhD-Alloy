@@ -1,5 +1,7 @@
 import { MarkerType } from "@xyflow/react";
 
+export const initialCode = "sig Person {\n\tfriends: some Person\n}\n run {} for 5"
+
 export const initialNodes = [
   {
     id: "n1",
@@ -21,7 +23,7 @@ export const initialNodes = [
   {
     id: "n3",
     position: { x: 0, y: 300 },
-    data: { label: "Node 3", color: "#60a5fa" },
+    data: { label: "Node 3", color: "#133157" },
     style: { background: '#60a5fa"' },
     width: 200,
     height: 75,

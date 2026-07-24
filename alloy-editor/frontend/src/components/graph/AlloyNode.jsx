@@ -1,9 +1,5 @@
 import { Handle, Position } from "@xyflow/react";
-
-const HANDLE_SPACING = 10;
-export const NODE_WIDTH = 200;
-export const NODE_HEIGHT = 75;
-export const HANDLE_COUNT = Math.floor(NODE_HEIGHT / HANDLE_SPACING);
+import { HANDLE_COUNT,HANDLE_SPACING, NODE_WIDTH, NODE_HEIGHT } from "../../utils/data";
 
 export default function AlloyNode({ data }) {
   // Number of handles along each side
@@ -31,7 +27,7 @@ export default function AlloyNode({ data }) {
           "target",
           Position.Top,
           {
-            left: i * HANDLE_SPACING,
+            left: (i+1) * HANDLE_SPACING,
           }
         )
       )}
@@ -43,7 +39,7 @@ export default function AlloyNode({ data }) {
           "source",
           Position.Bottom,
           {
-            left: i * HANDLE_SPACING,
+            left: (i+1) * HANDLE_SPACING,
           }
         )
       )}
@@ -55,7 +51,7 @@ export default function AlloyNode({ data }) {
           "target",
           Position.Left,
           {
-            top: i * HANDLE_SPACING,
+            top: (i+1)* HANDLE_SPACING,
           }
         )
       )}
@@ -67,7 +63,7 @@ export default function AlloyNode({ data }) {
           "source",
           Position.Right,
           {
-            top: i * HANDLE_SPACING,
+            top: (i+1)* HANDLE_SPACING,
           }
         )
       )}

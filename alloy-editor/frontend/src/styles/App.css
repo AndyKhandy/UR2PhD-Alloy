@@ -67,6 +67,7 @@ h1::before {
   position: absolute;
   bottom: 0px;
   transition: 200ms ease-in;
+
 }
 
 h1:hover::before {
