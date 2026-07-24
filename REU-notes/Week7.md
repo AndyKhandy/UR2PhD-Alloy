@@ -149,3 +149,9 @@ As you create edges:
 edge.sourceHandle = handles[index % handles.length];
 
 Now if a node has 12 outgoing edges:
+
+### SAVE FEATURE
+
+1. Blockly.serialization.workspaces.save(workspace)When you call save, Blockly doesn't just look at the blocks. It orchestrates a suite of built-in serializers that run sequentially to construct a complete snapshot:
+
+2. Blockly.serialization.workspaces.load(stateObject, workspace)When you feed that JavaScript object back into a newly injected workspace, Blockly reverses the process. It clears the target workspace completely to avoid duplicate items and injects data based on a strict priority layout:

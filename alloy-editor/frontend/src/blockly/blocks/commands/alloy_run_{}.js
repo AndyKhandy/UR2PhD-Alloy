@@ -8,7 +8,7 @@ Blockly.Blocks["alloy_run_{}"] = {
       .appendField("} for")
       .appendField(new Blockly.FieldNumber(5,1), "AMOUNT");
 
-    this.setPreviousStatement(true);
+
     this.setColour("3BA61B");
     this.setTooltip(
       "run {} — asks the Analyzer to find an example instance that satisfies the " +

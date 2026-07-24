@@ -1,8 +1,8 @@
 import BlocklyEditor from "./components/BlocklyEditor";
 import GraphPlane from "./components/GraphPlane";
 import "./styles/App.css";
-import { useState } from "react";
-import { useNodesState,useEdgesState } from "@xyflow/react";
+import { useState, useRef } from "react";
+import { useNodesState,useEdgesState, useReactFlow } from "@xyflow/react";
 import { initialEdges,initialNodes } from "./utils/demoResult";
 
 function App() {
@@ -10,6 +10,7 @@ function App() {
   const [nodes, setNodes] = useState(initialNodes);
   const [edges, setEdges] = useState(initialEdges);
   const [originalGraph, setOriginalGraph] = useState({nodes: initialNodes,edges: initialEdges})
+  const savedWorkspaceRef = useRef({blocks: {languageVersion: 0, blocks: []}})
 
   const changeMode = () => {
     setIsEditor(!isEditor);
@@ -35,7 +36,7 @@ function App() {
         </div>
       </div>
       {isEditor ? (
-        <BlocklyEditor setEdges={setEdges} setNodes={setNodes} setIsEditor={setIsEditor} setOriginalGraph={setOriginalGraph}></BlocklyEditor>
+        <BlocklyEditor setEdges={setEdges} setNodes={setNodes} setIsEditor={setIsEditor} setOriginalGraph={setOriginalGraph} savedWorkspaceRef={savedWorkspaceRef}></BlocklyEditor>
       ) : (
         <div className="graphContainer">
           <GraphPlane nodes={nodes} edges={edges}setNodes={setNodes} setEdges={setEdges} originalGraph={originalGraph}></GraphPlane>

@@ -9,7 +9,13 @@ import getNodesAndEdges from "../utils/flow/reactFlowConverter";
 import { Code, Trash, SquarePlay } from "lucide-react";
 import layoutNodes from "../utils/layout/layoutNodes";
 
-export default function BlocklyEditor({ setNodes, setEdges, setIsEditor, setOriginalGraph }) {
+export default function BlocklyEditor({
+  setNodes,
+  setEdges,
+  setIsEditor,
+  setOriginalGraph,
+  savedWorkspaceRef,
+}) {
   const blocklyDiv = useRef(null);
   const workspaceRef = useRef(null);
   const [alloyCode, setAlloyCode] = useState("");
@@ -31,11 +37,36 @@ export default function BlocklyEditor({ setNodes, setEdges, setIsEditor, setOrig
       },
     });
 
-    return () => {
-      workspaceRef.current?.dispose();
-      workspaceRef.current = null;
+    if (savedWorkspaceRef.current) {
+      Blockly.serialization.workspaces.load(
+        savedWorkspaceRef.current,
+        workspaceRef.current,
+      );
+    }
+
+    const handleWorkspaceChange = (event) => {
+      if (event.isUiEvent) return;
+
+      const currentSnapshot = Blockly.serialization.workspaces.save(
+        workspaceRef.current,
+      );
+      savedWorkspaceRef.current = currentSnapshot;
     };
-  }, []);
+
+    workspaceRef.current.addChangeListener(handleWorkspaceChange);
+
+    return () => {
+      if (workspaceRef.current) {
+        const finalSnapshot = Blockly.serialization.workspaces.save(
+          workspaceRef.current,
+        );
+        savedWorkspaceRef.current = finalSnapshot;
+        workspaceRef.current.removeChangeListener(handleWorkspaceChange);
+        workspaceRef.current?.dispose();
+        workspaceRef.current = null;
+      }
+    };
+  }, [savedWorkspaceRef]);
 
   const removeBlocks = () => {
     workspaceRef.current.clear();
@@ -72,7 +103,7 @@ export default function BlocklyEditor({ setNodes, setEdges, setIsEditor, setOrig
       console.log(result);
       setNodes(updatedNodes);
       setEdges(edges);
-      setOriginalGraph({nodes: updatedNodes,edges})
+      setOriginalGraph({ nodes: updatedNodes, edges });
     } catch (err) {
       setRunError(err.message);
     } finally {
