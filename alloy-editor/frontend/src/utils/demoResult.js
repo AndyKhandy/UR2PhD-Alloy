@@ -34,4 +34,18 @@ export const initialEdges = [
       height: 15,
     },
   },
+  {
+    id: "n1-n1",
+    source: "n1",
+    target: "n1",
+    markerEnd: {
+      type: MarkerType.ArrowClosed,
+      width: 15,
+      height: 15,
+    },
+  },
 ];
+
+export const NODE_WIDTH = 150
+export const NODE_HEIGHT = 50
+

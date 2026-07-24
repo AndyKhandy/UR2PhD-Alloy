@@ -1,5 +1,6 @@
 import { describe, it, expect } from "vitest";
-import { convertToNodes, convertToEdges } from "./graphConverter";
+import { MarkerType } from "@xyflow/react";
+import { convertToNodes, convertToEdges } from "../flow/reactFlowConverter";
 
 describe("convertToNodes", () => {
   it("returns an empty array when atoms is empty", () => {
@@ -12,12 +13,12 @@ describe("convertToNodes", () => {
     expect(convertToNodes(atoms)).toEqual([
       {
         id: "Person$0",
-        position: { x: 100, y: 100 },
+        position: { x: 0, y: 0 },
         data: { label: "Person$0", signature: "Person" },
       },
       {
         id: "Person$1",
-        position: { x: 100, y: 200 },
+        position: { x: 0, y: 0 },
         data: { label: "Person$1", signature: "Person" },
       },
     ]);
@@ -29,7 +30,7 @@ describe("convertToNodes", () => {
     expect(convertToNodes(atoms)).toEqual([
       {
         id: "Dog$0",
-        position: { x: 200, y: 200 },
+        position: { x: 0, y: 0 },
         data: { label: "Dog$0", signature: "Dog" },
       },
     ]);
@@ -44,17 +45,17 @@ describe("convertToNodes", () => {
     expect(convertToNodes(atoms)).toEqual([
       {
         id: "Person$0",
-        position: { x: 100, y: 100 },
+        position: { x: 0, y: 0 },
         data: { label: "Person$0", signature: "Person" },
       },
       {
         id: "Person$1",
-        position: { x: 100, y: 200 },
+        position: { x: 0, y: 0 },
         data: { label: "Person$1", signature: "Person" },
       },
       {
         id: "Dog$0",
-        position: { x: 200, y: 200 },
+        position: { x: 0, y: 0 },
         data: { label: "Dog$0", signature: "Dog" },
       },
     ]);
@@ -74,19 +75,17 @@ describe("convertToNodes", () => {
     expect(nodes[1].data.signature).toBe("Dog");
   });
 
-  it("gives every atom within a signature a distinct, non-zero position", () => {
+  it("gives every atom within a signature a zero-based position", () => {
     const atoms = { Person: ["Person$0", "Person$1", "Person$2"] };
 
     const nodes = convertToNodes(atoms);
 
     expect(nodes).toHaveLength(3);
     expect(nodes.map((n) => n.position)).toEqual([
-      { x: 100, y: 100 },
-      { x: 100, y: 200 },
-      { x: 100, y: 300 },
+      { x: 0, y: 0 },
+      { x: 0, y: 0 },
+      { x: 0, y: 0 },
     ]);
-    const ys = nodes.map((n) => n.position.y);
-    expect(new Set(ys).size).toBe(ys.length);
   });
 });
 
@@ -106,6 +105,9 @@ describe("convertToEdges", () => {
         source: "Person$0",
         target: "Person$1",
         label: "friends",
+        markerEnd: {
+          type: MarkerType.ArrowClosed,
+        },
       },
     ]);
   });
@@ -135,6 +137,9 @@ describe("convertToEdges", () => {
         source: "Person$0",
         target: "Person$0",
         label: "self",
+        markerEnd: {
+          type: MarkerType.ArrowClosed,
+        },
       },
     ]);
   });

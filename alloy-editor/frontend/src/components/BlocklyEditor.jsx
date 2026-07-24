@@ -5,12 +5,11 @@ import "../blockly/generators/indexG";
 import { toolbox } from "../blockly/toolbox";
 import { alloyGenerator } from "../blockly/generators/alloy_generator";
 import "../styles/blockly.css";
-import getNodesAndEdges from "../utils/graphConverter";
-import {Code, Trash, SquarePlay} from "lucide-react"
+import getNodesAndEdges from "../utils/flow/reactFlowConverter";
+import { Code, Trash, SquarePlay } from "lucide-react";
+import layoutNodes from "../utils/layout/layoutNodes";
 
-
-
-export default function BlocklyEditor({setNodes, setEdges, setIsEditor}) {
+export default function BlocklyEditor({ setNodes, setEdges, setIsEditor }) {
   const blocklyDiv = useRef(null);
   const workspaceRef = useRef(null);
   const [alloyCode, setAlloyCode] = useState("");
@@ -67,11 +66,12 @@ export default function BlocklyEditor({setNodes, setEdges, setIsEditor}) {
         throw new Error(`Server error: ${response.status}`);
       }
       const result = await response.json();
-      const [nodes,edges] = getNodesAndEdges(result)
-      console.log(nodes,edges);
+      const [nodes, edges] = getNodesAndEdges(result);
+      const updatedNodes = await layoutNodes(nodes, edges);
+      console.log(nodes, edges, updatedNodes);
       console.log(result);
+      setNodes(updatedNodes);
       setEdges(edges);
-      setNodes(nodes);
     } catch (err) {
       setRunError(err.message);
     } finally {
@@ -81,19 +81,28 @@ export default function BlocklyEditor({setNodes, setEdges, setIsEditor}) {
   }
 
   return (
-    <div className="main" style={{ height: "100vh", display: "flex", flexDirection: "column" }}>
+    <div
+      className="main"
+      style={{ height: "100vh", display: "flex", flexDirection: "column" }}
+    >
       <div ref={blocklyDiv} style={{ flex: 1 }} />
       <div className="buttons">
-        <button onClick={removeBlocks}><Trash color="red"/></button>
-        <button onClick={generateAlloy}><Code color="blue"></Code></button>
+        <button onClick={removeBlocks}>
+          <Trash color="red" />
+        </button>
+        <button onClick={generateAlloy}>
+          <Code color="blue"></Code>
+        </button>
         <button onClick={runModel} disabled={isRunning}>
           <SquarePlay color="green" />
         </button>
       </div>
-      {alloyCode && (<div className="code">
-        <h4>Alloy Code</h4>
-        <pre>{alloyCode}</pre>
-      </div>)}
+      {alloyCode && (
+        <div className="code">
+          <h4>Alloy Code</h4>
+          <pre>{alloyCode}</pre>
+        </div>
+      )}
     </div>
   );
 }

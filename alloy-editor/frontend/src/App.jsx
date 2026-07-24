@@ -3,7 +3,7 @@ import GraphPlane from "./components/GraphPlane";
 import "./styles/App.css";
 import { useState } from "react";
 import { useNodesState,useEdgesState } from "@xyflow/react";
-import { initialEdges,initialNodes } from "./utils/graphDemo";
+import { initialEdges,initialNodes } from "./utils/demoResult";
 
 function App() {
   const [isEditor, setIsEditor] = useState(true);
