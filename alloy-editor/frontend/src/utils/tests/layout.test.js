@@ -2,7 +2,7 @@ import { describe, expect, it } from "vitest";
 import convertToElkGraph from "../layout/convertToElkGraph";
 import applyElkLayout from "../layout/applyELKLayout";
 import layoutNodes from "../layout/layoutNodes";
-import { NODE_HEIGHT, NODE_WIDTH } from "../demoResult";
+import { NODE_WIDTH, NODE_HEIGHT } from "../../components/graph/AlloyNode";
 
 describe("convertToElkGraph", () => {
   it("converts flow nodes to sized ELK children", () => {

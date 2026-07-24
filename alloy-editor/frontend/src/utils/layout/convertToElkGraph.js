@@ -1,4 +1,4 @@
-import { NODE_WIDTH, NODE_HEIGHT } from "../demoResult";
+import { NODE_WIDTH, NODE_HEIGHT } from "../../components/graph/AlloyNode";
 
 export default function convertToElkGraph(flowNodes, flowEdges) {
   const elkNodes = flowNodes.map((node) => {

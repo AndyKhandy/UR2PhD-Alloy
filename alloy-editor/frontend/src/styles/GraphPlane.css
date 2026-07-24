@@ -33,10 +33,11 @@
   border-radius: 10px;
   font-weight: bolder;
   text-transform: uppercase;
-  width: 150px;
-  height: 50px;
+  width: 200;
+  height: 75px;
   display: grid;
   place-items: center;
+  border: 2px solid #2d3440;
 }
 
 .react-flow__node:hover {
@@ -44,19 +45,23 @@
 }
 
 .react-flow__handle {
+  width: 4px;
+
+  height: 4px;
+
   opacity: 0;
 }
 
 .react-flow__edge-text {
-    font-size: 8px;
-    font-weight: 600;
-    fill: #fbfcfd;
-    letter-spacing: 0.2px;
-    transform: translate(20px, -10px);
+  font-size: 8px;
+  font-weight: 600;
+  fill: #fbfcfd;
+  letter-spacing: 0.2px;
+  transform: translate(20px, -10px);
 }
 
 .react-flow__edge-textbg {
-    fill: transparent;
+  fill: transparent;
 }
 
 .react-flow__edge-path {
@@ -68,11 +73,31 @@
   cursor: pointer;
 }
 
-
 .react-flow__edge.selected .react-flow__edge-path {
   stroke-width: 3;
 }
 
 .react-flow__edge:hover .react-flow__edge-path {
   stroke: #ffffff;
+}
+
+.flowGraph {
+  position: relative;
+}
+
+.reset-btn {
+  position: absolute;
+  right: 15px;
+  top: -10px;
+  background-color: rgb(255, 255, 255);
+  cursor: pointer;
+  padding: 2px;
+  border: none;
+  border-radius: 2px;
+  transition: 200ms ease in;
+}
+
+.reset-btn:hover {
+  scale: 1.2;
+  background-color: rgb(0, 0, 0);
 }

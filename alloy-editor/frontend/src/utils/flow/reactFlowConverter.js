@@ -1,4 +1,5 @@
 import { MarkerType } from "@xyflow/react";
+import { HANDLE_COUNT } from "../../components/graph/AlloyNode";
 
 export default function getNodesAndEdges(alloyResult) {
   if (alloyResult.satisfiable) {
@@ -16,6 +17,7 @@ export function convertToNodes(atoms) {
     instances.map((instance, instanceIndex) => {
       return {
         id: instance,
+        type: "alloy",
         position: { x: 0, y: 0 },
         data: { label: instance, signature: name },
       };
@@ -24,13 +26,23 @@ export function convertToNodes(atoms) {
 }
 
 export function convertToEdges(relations) {
-  return relations.map((relation) => ({
-    id: `${relation.source}-${relation.fieldName}-${relation.target}`,
-    source: relation.source,
-    target: relation.target,
-    label: relation.fieldName,
-    markerEnd: {
-      type: MarkerType.ArrowClosed,
-    },
-  }));
+  return relations.map((relation, index) => {
+    const handleIndex = index % HANDLE_COUNT;
+    const isSelfLoop = relation.source === relation.target;
+
+    return {
+      id: `${relation.source}-${relation.fieldName}-${relation.target}`,
+      source: relation.source,
+      target: relation.target,
+      sourceHandle: relation.sourceHandle ?? `right-${handleIndex}`,
+      targetHandle:
+        relation.targetHandle ??
+        `${isSelfLoop ? "top" : "left"}-${handleIndex}`,
+      label: relation.fieldName,
+      type: isSelfLoop ? "selfLoop" : "default",
+      markerEnd: {
+        type: MarkerType.ArrowClosed,
+      },
+    };
+  });
 }

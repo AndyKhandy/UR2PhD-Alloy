@@ -1,4 +1,4 @@
-import { useState, useCallback } from "react";
+import { useState, useCallback, useRef } from "react";
 import {
   ReactFlow,
   Background,
@@ -8,11 +8,30 @@ import {
   addEdge,
   MiniMap,
   Panel,
+  useReactFlow,
 } from "@xyflow/react";
 import "@xyflow/react/dist/style.css";
 import "../styles/GraphPlane.css";
+import SelfLoopEdge from "./graph/SelfLoopEdge";
+import AlloyNode from "./graph/AlloyNode";
+import { RotateCcw } from "lucide-react";
 
-export default function GraphPlane({ nodes, edges, setEdges, setNodes }) {
+
+const nodeTypes = {
+  alloy: AlloyNode,
+};
+
+const edgeTypes = {
+  selfLoop: SelfLoopEdge,
+};
+
+export default function GraphPlane({ nodes, edges, setEdges, setNodes, originalGraph }) {
+
+  const resetGraph = () => {
+    setNodes(structuredClone(originalGraph.nodes));
+    setEdges(structuredClone(originalGraph.edges));
+  }
+
   const onNodesChange = useCallback(
     (changes) =>
       setNodes((nodesSnapshot) => applyNodeChanges(changes, nodesSnapshot)),
@@ -35,10 +54,13 @@ export default function GraphPlane({ nodes, edges, setEdges, setNodes }) {
         height: "100vh",
         border: "4px solid #ccc",
       }}
+      className="flowGraph"
     >
       <ReactFlow
         nodes={nodes}
+        nodeTypes={nodeTypes}
         edges={edges}
+        edgeTypes={edgeTypes}
         onNodesChange={onNodesChange}
         onEdgesChange={onEdgesChange}
         onConnect={onConnect}
@@ -63,6 +85,7 @@ export default function GraphPlane({ nodes, edges, setEdges, setNodes }) {
         </Panel>
         <Controls></Controls>
       </ReactFlow>
+      <button onClick={resetGraph} className="reset-btn" ><RotateCcw color="blue"/></button>
     </div>
   );
 }

@@ -13,11 +13,13 @@ describe("convertToNodes", () => {
     expect(convertToNodes(atoms)).toEqual([
       {
         id: "Person$0",
+        type: "alloy",
         position: { x: 0, y: 0 },
         data: { label: "Person$0", signature: "Person" },
       },
       {
         id: "Person$1",
+        type: "alloy",
         position: { x: 0, y: 0 },
         data: { label: "Person$1", signature: "Person" },
       },
@@ -30,6 +32,7 @@ describe("convertToNodes", () => {
     expect(convertToNodes(atoms)).toEqual([
       {
         id: "Dog$0",
+        type: "alloy",
         position: { x: 0, y: 0 },
         data: { label: "Dog$0", signature: "Dog" },
       },
@@ -45,16 +48,19 @@ describe("convertToNodes", () => {
     expect(convertToNodes(atoms)).toEqual([
       {
         id: "Person$0",
+        type: "alloy",
         position: { x: 0, y: 0 },
         data: { label: "Person$0", signature: "Person" },
       },
       {
         id: "Person$1",
+        type: "alloy",
         position: { x: 0, y: 0 },
         data: { label: "Person$1", signature: "Person" },
       },
       {
         id: "Dog$0",
+        type: "alloy",
         position: { x: 0, y: 0 },
         data: { label: "Dog$0", signature: "Dog" },
       },
@@ -104,7 +110,10 @@ describe("convertToEdges", () => {
         id: "Person$0-friends-Person$1",
         source: "Person$0",
         target: "Person$1",
+        sourceHandle: "right-0",
+        targetHandle: "left-0",
         label: "friends",
+        type: "default",
         markerEnd: {
           type: MarkerType.ArrowClosed,
         },
@@ -124,6 +133,8 @@ describe("convertToEdges", () => {
     const ids = edges.map((e) => e.id);
     expect(new Set(ids).size).toBe(ids.length);
     expect(edges.map((e) => e.label)).toEqual(["friends", "spouse"]);
+    expect(edges.map((e) => e.sourceHandle)).toEqual(["right-0", "right-1"]);
+    expect(edges.map((e) => e.targetHandle)).toEqual(["left-0", "left-1"]);
   });
 
   it("handles a self-loop relation (source === target)", () => {
@@ -136,7 +147,10 @@ describe("convertToEdges", () => {
         id: "Person$0-self-Person$0",
         source: "Person$0",
         target: "Person$0",
+        sourceHandle: "right-0",
+        targetHandle: "top-0",
         label: "self",
+        type: "selfLoop",
         markerEnd: {
           type: MarkerType.ArrowClosed,
         },

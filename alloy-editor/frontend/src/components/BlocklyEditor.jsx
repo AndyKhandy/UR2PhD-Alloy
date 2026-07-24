@@ -9,7 +9,7 @@ import getNodesAndEdges from "../utils/flow/reactFlowConverter";
 import { Code, Trash, SquarePlay } from "lucide-react";
 import layoutNodes from "../utils/layout/layoutNodes";
 
-export default function BlocklyEditor({ setNodes, setEdges, setIsEditor }) {
+export default function BlocklyEditor({ setNodes, setEdges, setIsEditor, setOriginalGraph }) {
   const blocklyDiv = useRef(null);
   const workspaceRef = useRef(null);
   const [alloyCode, setAlloyCode] = useState("");
@@ -72,6 +72,7 @@ export default function BlocklyEditor({ setNodes, setEdges, setIsEditor }) {
       console.log(result);
       setNodes(updatedNodes);
       setEdges(edges);
+      setOriginalGraph({nodes: updatedNodes,edges})
     } catch (err) {
       setRunError(err.message);
     } finally {

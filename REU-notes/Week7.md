@@ -127,3 +127,25 @@ const nodes = reactFlowNodes.map(node => {
     };
 
 });
+```
+
+### Custom Edges and Nodes
+
+Then in convertToEdges():
+
+const handles = [
+  "top",
+  "top-right",
+  "right",
+  "bottom-right",
+  "bottom",
+  "bottom-left",
+  "left",
+  "top-left",
+];
+
+As you create edges:
+
+edge.sourceHandle = handles[index % handles.length];
+
+Now if a node has 12 outgoing edges:

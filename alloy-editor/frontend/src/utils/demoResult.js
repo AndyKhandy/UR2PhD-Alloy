@@ -6,10 +6,26 @@ export const initialNodes = [
     position: { x: 0, y: 0 },
     data: { label: "Node 1", color: "#e110ad" },
     type: "input",
-    style: { background: '#e110ad'}
+    width: 200,
+    height: 75,
+    style: { background: "#e110ad" },
   },
-  { id: "n2", position: { x: 100, y: 100 }, data: { label: "Node 2", color: "#ff8f17" }, style: { background: '#ff8f17'} },
-  { id: "n3", position: { x: 0, y: 200 }, data: { label: "Node 3", color: "#60a5fa" }, style: { background: '#60a5fa"'} },
+  {
+    id: "n2",
+    position: { x: 300, y: 100 },
+    data: { label: "Node 2", color: "#ff8f17" },
+    style: { background: "#ff8f17" },
+    width: 200,
+    height: 75,
+  },
+  {
+    id: "n3",
+    position: { x: 0, y: 300 },
+    data: { label: "Node 3", color: "#60a5fa" },
+    style: { background: '#60a5fa"' },
+    width: 200,
+    height: 75,
+  },
 ];
 
 export const initialEdges = [
@@ -38,6 +54,7 @@ export const initialEdges = [
     id: "n1-n1",
     source: "n1",
     target: "n1",
+    type: "selfLoop",
     markerEnd: {
       type: MarkerType.ArrowClosed,
       width: 15,
@@ -45,7 +62,3 @@ export const initialEdges = [
     },
   },
 ];
-
-export const NODE_WIDTH = 150
-export const NODE_HEIGHT = 50
-

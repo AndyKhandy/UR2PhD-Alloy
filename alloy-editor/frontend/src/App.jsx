@@ -9,6 +9,7 @@ function App() {
   const [isEditor, setIsEditor] = useState(true);
   const [nodes, setNodes] = useState(initialNodes);
   const [edges, setEdges] = useState(initialEdges);
+  const [originalGraph, setOriginalGraph] = useState({nodes: initialNodes,edges: initialEdges})
 
   const changeMode = () => {
     setIsEditor(!isEditor);
@@ -17,7 +18,7 @@ function App() {
   return (
     <>
       <div className="header">
-        <h1>AlloyLab</h1>
+        <h1>AlloyBlocks</h1>
         <div className="header-btns">
           <button
             onClick={changeMode}
@@ -34,10 +35,10 @@ function App() {
         </div>
       </div>
       {isEditor ? (
-        <BlocklyEditor setEdges={setEdges} setNodes={setNodes} setIsEditor={setIsEditor}></BlocklyEditor>
+        <BlocklyEditor setEdges={setEdges} setNodes={setNodes} setIsEditor={setIsEditor} setOriginalGraph={setOriginalGraph}></BlocklyEditor>
       ) : (
         <div className="graphContainer">
-          <GraphPlane nodes={nodes} edges={edges}setNodes={setNodes} setEdges={setEdges}></GraphPlane>
+          <GraphPlane nodes={nodes} edges={edges}setNodes={setNodes} setEdges={setEdges} originalGraph={originalGraph}></GraphPlane>
         </div>
       )}
     </>
