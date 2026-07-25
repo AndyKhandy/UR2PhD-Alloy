@@ -79,6 +79,25 @@ describe("applyElkLayout", () => {
       applyElkLayout([{ id: "missing" }], { children: [] }),
     ).toThrow('ELK layout did not contain node "missing"');
   });
+
+  it("keeps overlapping nodes separated by a 20px horizontal gap", () => {
+    const nodes = [
+      { id: "person", position: { x: 0, y: 0 } },
+      { id: "dog", position: { x: 0, y: 100 } },
+    ];
+
+    const laidOutNodes = applyElkLayout(nodes, {
+      children: [
+        { id: "person", x: 200, y: 40 },
+        { id: "dog", x: 200, y: 80 },
+      ],
+    });
+
+    expect(laidOutNodes.map((node) => node.position)).toEqual([
+      { x: 200, y: 40 },
+      { x: 445, y: 80 },
+    ]);
+  });
 });
 
 describe("layoutNodes", () => {

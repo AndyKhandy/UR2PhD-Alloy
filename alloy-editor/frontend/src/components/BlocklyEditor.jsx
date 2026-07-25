@@ -5,7 +5,9 @@ import "../blockly/generators/indexG";
 import { toolbox } from "../blockly/toolbox";
 import { alloyGenerator } from "../blockly/generators/alloy_generator";
 import "../styles/blockly.css";
-import getNodesAndEdges from "../utils/flow/reactFlowConverter";
+import getNodesAndEdges, {
+  assignEdgeHandles,
+} from "../utils/flow/reactFlowConverter";
 import { Code, Trash, SquarePlay } from "lucide-react";
 import layoutNodes from "../utils/layout/layoutNodes";
 
@@ -31,7 +33,7 @@ export default function BlocklyEditor({
       zoom: {
         controls: true,
         startScale: 0.9, // Default is 1.0
-        maxScale: 1,
+        maxScale: 1.4,
         minScale: 0.5,
         scaleSpeed: 1.1,
       },
@@ -81,6 +83,7 @@ export default function BlocklyEditor({
     if (code) {
       setAlloyCode(code);
       console.log(code);
+      console.log(code.split("\n"));
       changeMode("code");
       setRunError(null);
     }
@@ -104,11 +107,16 @@ export default function BlocklyEditor({
         const result = await response.json();
         const [nodes, edges] = getNodesAndEdges(result);
         const updatedNodes = await layoutNodes(nodes, edges);
+        const updatedEdges = assignEdgeHandles(
+          edges,
+          updatedNodes,
+          result.relations,
+        );
         console.log(nodes, edges, updatedNodes);
         console.log(result);
         setNodes(updatedNodes);
-        setEdges(edges);
-        setOriginalGraph({ nodes: updatedNodes, edges });
+        setEdges(updatedEdges);
+        setOriginalGraph({ nodes: updatedNodes, edges: updatedEdges });
       } catch (err) {
         setRunError(err.message);
       } finally {

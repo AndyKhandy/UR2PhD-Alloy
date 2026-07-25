@@ -81,11 +81,11 @@ export default function GraphPlane({ nodes, edges, setEdges, setNodes, originalG
           nodeColor={(node) => node.data.color}
         />
         <Panel position="top-left">
-          <h1>Alloy Result</h1>
+          <h1>Graph Instance</h1>
         </Panel>
         <Controls></Controls>
       </ReactFlow>
-      <button onClick={resetGraph} className="reset-btn" ><RotateCcw color="blue"/></button>
+      <button onClick={resetGraph} className="reset-btn" ><RotateCcw color="purple"/></button>
     </div>
   );
 }
