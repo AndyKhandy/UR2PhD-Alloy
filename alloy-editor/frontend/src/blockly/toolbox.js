@@ -21,6 +21,14 @@ export const toolbox = {
           kind: "block",
           type: "alloy_sigEx",
         },
+        {
+          kind: "block",
+          type: "alloy_sigIn_empty",
+        },
+        {
+          kind: "block",
+          type: "alloy_sigIn",
+        },
         { kind: "block", type: "alloy_relation" },
       ],
     },
@@ -123,6 +131,10 @@ export const toolbox = {
           kind: "label",
           text: " ",
           gap: 14,
+        },
+        {
+          kind: "block",
+          type: "alloy_run_{}_empty",
         },
         {
           kind: "block",

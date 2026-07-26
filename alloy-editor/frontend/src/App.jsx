@@ -3,7 +3,7 @@ import GraphPlane from "./components/GraphPlane";
 import CodeView from "./components/CodeView";
 import "./styles/App.css";
 import { useEffect, useRef, useState } from "react";
-import { initialEdges, initialNodes, initialCode } from "./utils/demoResult";
+import { initialEdges, initialNodes, initialCode } from "./utils/demoData";
 import {
   localGraph,
   localWorkspaceRef,

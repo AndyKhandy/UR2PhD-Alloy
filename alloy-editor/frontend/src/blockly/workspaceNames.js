@@ -4,6 +4,8 @@ export const SIGNATURE_BLOCK_TYPES = [
   "alloy_sig_empty",
   "alloy_sigEx",
   "alloy_sigEx_empty",
+  "alloy_sigIn",
+  "alloy_sigIn_empty"
 ];
 
 export const PREDICATE_BLOCK_TYPES = ["alloy_pred"];
@@ -84,6 +86,8 @@ export function signatureDropdownOptions() {
   const isSignatureExtension = [
     "alloy_sigEx",
     "alloy_sigEx_empty",
+    "alloy_sigIn",
+    "alloy_sigIn_empty"
   ].includes(sourceBlock?.type);
   const excludedName = isSignatureExtension
     ? sourceBlock.getFieldValue("NAME")?.trim()

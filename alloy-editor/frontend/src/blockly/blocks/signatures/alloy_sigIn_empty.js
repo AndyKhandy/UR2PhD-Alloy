@@ -5,7 +5,7 @@ import {
   signatureDropdownOptions,
 } from "../../workspaceNames";
 
-Blockly.Blocks["alloy_sigEx_empty"] = {
+Blockly.Blocks["alloy_sigIn_empty"] = {
   init: function () {
     this.appendDummyInput()
       .appendField("sig")
@@ -16,16 +16,15 @@ Blockly.Blocks["alloy_sigEx_empty"] = {
         ),
         "NAME",
       )
-      .appendField("extends")
-      .appendField(new Blockly.FieldDropdown(signatureDropdownOptions), "EXTENDNAME")
+      .appendField("in")
+      .appendField(new Blockly.FieldDropdown(signatureDropdownOptions), "INNAME")
       .appendField("{ }");
 
 
     this.setColour(230);
     this.setTooltip(
-      "Declares a signature that extends a parent — it inherits the parent's " +
-        "fields and is a subset of it. Field blocks nest inside the braces. " +
-        "Example: sig Student extends Person { }",
+      "Declares a signature that is a subset of a parent — all of its atoms must belong to an existing parent signature or expression  " +
+        "Example: sig Student in Person { }",
     );
   },
 };

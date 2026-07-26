@@ -1,17 +1,17 @@
 ### Styling the Code View
+
 console.log(code.split("\n")) -> gives you the number of lines of the code
 
 Array(4)
 
 "sig Person {"
-"     friends: some Person"
+" friends: some Person"
 "}"
 "run {some friends} for 5"
 
 it will give me 4 strings which is the number of lines!
 
 ### Restrictive Feature for Sigs, Pred, and Facts
-
 
 #### FLOW
 
@@ -31,7 +31,7 @@ User creates or renames block
   The dropdowns also regenerate when opened, but refreshing in handleWorkspaceChange ensures their cached options are synchronized immediately.
 ```
 
-you can use field?.getSourceBlock()?.workspace to get the current workspace ref value. 
+you can use field?.getSourceBlock()?.workspace to get the current workspace ref value.
 
 ```
 return [
@@ -47,73 +47,101 @@ return [
 
 What this does is it goes through all the blocks in workspace and if the blocks are a signature (they have the type "alloy_sig", "alloy_sig_empty", "alloy_sigEx", or "alloy_sigEx_empty") we can use them to get there signature name value for our dropdown
 
- - Signatures:
-      - Collects names from all four signature block types.
-      - Signature references, parent signatures, and relation targets use dynamic dropdowns.
-      - Duplicate signature names are rejected.
+- Signatures:
+  - Collects names from all four signature block types.
+  - Signature references, parent signatures, and relation targets use dynamic dropdowns.
+  - Duplicate signature names are rejected.
 
-  - Predicates:
-      - Predicate names are collected.
-      - The run block now uses a dropdown containing only defined predicates.
-      - Duplicate predicate names are rejected.
+- Predicates:
+  - Predicate names are collected.
+  - The run block now uses a dropdown containing only defined predicates.
+  - Duplicate predicate names are rejected.
 
-  - Facts:
-      - Fact names are collected and logged.
-      - Duplicate fact names are rejected.
+- Facts:
+  - Fact names are collected and logged.
+  - Duplicate fact names are rejected.
 
-  The shared logic is in alloy-editor/frontend/src/blockly/workspaceNames.js:1.
+The shared logic is in alloy-editor/frontend/src/blockly/workspaceNames.js:1.
 
-  The console now displays:
+The console now displays:
 
-  {
-    sigs: ["Person", "Student"],
-    predicates: ["hasParent"],
-    facts: ["NoCycles"]
-  }
+{
+sigs: ["Person", "Student"],
+predicates: ["hasParent"],
+facts: ["NoCycles"]
+}
 
-  ### Refresh Capability of Dropdowns 
-  
-  export function refreshDynamicNameDropdowns(workspace) {
-    workspace?.getAllBlocks(false).forEach((block) => {
-      block.inputList.forEach((input) => {
-        input.fieldRow.forEach((field) => {
-          if (field.isOptionListDynamic?.()) {
-            field.getOptions(false);
-          }
-        });
+### Refresh Capability of Dropdowns
+
+```
+export function refreshDynamicNameDropdowns(workspace) {
+  workspace?.getAllBlocks(false).forEach((block) => {
+    block.inputList.forEach((input) => {
+      input.fieldRow.forEach((field) => {
+        if (field.isOptionListDynamic?.()) {
+          field.getOptions(false);
+        }
       });
     });
-  }
+  });
+}
+```
 
-   1. workspace.getAllBlocks(false)
+1. workspace.getAllBlocks(false)
 
-     Gets every block currently in the workspace, including blocks nested inside other blocks.
+   Gets every block currently in the workspace, including blocks nested inside other blocks.
 
-  2. block.inputList
+2. block.inputList
 
-     Blockly stores each block’s inputs here. This includes dummy inputs and statement/value inputs.
+   Blockly stores each block’s inputs here. This includes dummy inputs and statement/value inputs.
 
-  3. input.fieldRow
+3. input.fieldRow
 
-     Each input contains its fields. For example, a signature reference has a FieldDropdown.
+   Each input contains its fields. For example, a signature reference has a FieldDropdown.
 
-  4. field.isOptionListDynamic?.()
+4. field.isOptionListDynamic?.()
 
-     Checks whether the field uses a function to generate its dropdown options.
+   Checks whether the field uses a function to generate its dropdown options.
 
-     For example:
+   For example:
 
-     new Blockly.FieldDropdown(signatureDropdownOptions)
+   new Blockly.FieldDropdown(signatureDropdownOptions)
 
-     is dynamic, while this is static:
+   is dynamic, while this is static:
 
-     new Blockly.FieldDropdown([
-       ["one", "one"],
-       ["some", "some"],
-     ])
+   new Blockly.FieldDropdown([
+   ["one", "one"],
+   ["some", "some"],
+   ])
 
-  5. field.getOptions(false)
+5. field.getOptions(false)
 
-     This asks Blockly to regenerate the dropdown options.
+   This asks Blockly to regenerate the dropdown options.
 
-     The false means “do not use the cached options.” Blockly calls the dropdown generator again, which now sees the latest workspace contents.
+   The false means “do not use the cached options.” Blockly calls the dropdown generator again, which now sees the latest workspace contents.
+   - Created alloy-editor/frontend/src/blockly/workspaceNames.js
+   - Collects signature, predicate, and fact names.
+   - Removes duplicates and empty names.
+   - Provides dynamic dropdown helpers.
+   - Prevents duplicate declaration names.
+   - Filters a sigEx block’s own name from its parent-signature dropdown.
+   - Refreshes dynamic dropdown options.
+
+- Updated signature blocks:
+  - Signature references use available signature names.
+  - Relations can target available signatures.
+  - sigEx parent dropdowns show available signatures except themselves.
+
+- Updated predicate blocks:
+  - The run command only allows defined predicate names.
+
+- Updated fact blocks:
+  - Fact names are collected.
+  - Duplicate fact names are rejected.
+  - Facts currently have no reference dropdown because no existing block references facts directly.
+
+- Updated alloy-editor/frontend/src/components/BlocklyEditor.jsx
+  - On every workspace change, it:
+    - Saves the workspace.
+    - Collects all sig/pred/fact names.
+    - Refreshes all dynamic dropdowns.
