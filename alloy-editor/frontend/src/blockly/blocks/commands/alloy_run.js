@@ -1,10 +1,11 @@
 import * as Blockly from "blockly";
+import { predicateDropdownOptions } from "../../workspaceNames";
 
 Blockly.Blocks["alloy_run"] = {
   init: function () {
     this.appendDummyInput()
       .appendField("run")
-      .appendField(new Blockly.FieldTextInput("predName"), "TARGET")
+      .appendField(new Blockly.FieldDropdown(predicateDropdownOptions), "TARGET")
       .appendField("for")
       .appendField(new Blockly.FieldNumber(5,1), "AMOUNT");
 

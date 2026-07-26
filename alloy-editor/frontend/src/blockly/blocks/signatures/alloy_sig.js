@@ -1,10 +1,20 @@
 import * as Blockly from "blockly";
+import {
+  SIGNATURE_BLOCK_TYPES,
+  createUniqueNameValidator,
+} from "../../workspaceNames";
 
 Blockly.Blocks["alloy_sig"] = {
   init: function () {
     this.appendDummyInput()
       .appendField("sig")
-      .appendField(new Blockly.FieldTextInput("Person"), "NAME")
+      .appendField(
+        new Blockly.FieldTextInput(
+          "Person",
+          createUniqueNameValidator(SIGNATURE_BLOCK_TYPES),
+        ),
+        "NAME",
+      )
       .appendField("{");
 
     this.appendStatementInput("BODY").setCheck("Relation");

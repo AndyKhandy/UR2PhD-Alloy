@@ -1,10 +1,20 @@
 import * as Blockly from "blockly";
+import {
+  FACT_BLOCK_TYPES,
+  createUniqueNameValidator,
+} from "../../workspaceNames";
 
 Blockly.Blocks["alloy_fact"] = {
   init: function () {
     this.appendDummyInput()
       .appendField("fact ")
-      .appendField(new Blockly.FieldTextInput("name"), "NAME")
+      .appendField(
+        new Blockly.FieldTextInput(
+          "name",
+          createUniqueNameValidator(FACT_BLOCK_TYPES),
+        ),
+        "NAME",
+      )
       .appendField(" {");
 
     this.appendStatementInput("BODY").setCheck("LogicalStatement");

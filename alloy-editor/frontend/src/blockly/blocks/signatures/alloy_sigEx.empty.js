@@ -1,11 +1,21 @@
 import * as Blockly from "blockly";
-import { signatureDropdownOptions } from "../../workspaceNames";
+import {
+  SIGNATURE_BLOCK_TYPES,
+  createUniqueNameValidator,
+  signatureDropdownOptions,
+} from "../../workspaceNames";
 
 Blockly.Blocks["alloy_sigEx_empty"] = {
   init: function () {
     this.appendDummyInput()
       .appendField("sig")
-      .appendField(new Blockly.FieldTextInput("Student"), "NAME")
+      .appendField(
+        new Blockly.FieldTextInput(
+          "Student",
+          createUniqueNameValidator(SIGNATURE_BLOCK_TYPES),
+        ),
+        "NAME",
+      )
       .appendField("extends")
       .appendField(new Blockly.FieldDropdown(signatureDropdownOptions), "EXTENDNAME")
       .appendField("{ }");

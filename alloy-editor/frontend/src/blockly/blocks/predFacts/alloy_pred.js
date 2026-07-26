@@ -1,10 +1,20 @@
 import * as Blockly from "blockly";
+import {
+  PREDICATE_BLOCK_TYPES,
+  createUniqueNameValidator,
+} from "../../workspaceNames";
 
 Blockly.Blocks["alloy_pred"] = {
   init: function () {
     this.appendDummyInput()
       .appendField("pred ")
-      .appendField(new Blockly.FieldTextInput("name"), "NAME")
+      .appendField(
+        new Blockly.FieldTextInput(
+          "name",
+          createUniqueNameValidator(PREDICATE_BLOCK_TYPES),
+        ),
+        "NAME",
+      )
       .appendField(" {");
 
     this.appendStatementInput("BODY").setCheck("LogicalStatement");
