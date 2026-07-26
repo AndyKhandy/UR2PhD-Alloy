@@ -1,4 +1,5 @@
 import * as Blockly from "blockly";
+import { signatureDropdownOptions } from "../../workspaceNames";
 
 Blockly.Blocks["alloy_relation"] = {
   init: function () {
@@ -20,7 +21,7 @@ Blockly.Blocks["alloy_relation"] = {
         ]),
         "MULTIPLICITY",
       )
-      .appendField(new Blockly.FieldTextInput("targetSig"), "TARGET_SET");
+      .appendField(new Blockly.FieldDropdown(signatureDropdownOptions), "TARGET_SET");
 
     this.setInputsInline(true);
 

@@ -1,9 +1,10 @@
 import * as Blockly from "blockly";
+import { signatureDropdownOptions } from "../../workspaceNames";
 
 Blockly.Blocks["alloy_sig_reference"] = {
   init: function () {
     this.appendDummyInput().appendField(
-      new Blockly.FieldTextInput("TargetSig"),
+      new Blockly.FieldDropdown(signatureDropdownOptions),
       "SIG_NAME",
     );
     this.setOutput(true, "Expression");

@@ -11,6 +11,7 @@ import getNodesAndEdges, {
 import { Code, Trash, SquarePlay } from "lucide-react";
 import layoutNodes from "../utils/layout/layoutNodes";
 import { saveLocalWorkspaceRef } from "../utils/localStorage";
+import { getSignatureNames } from "../blockly/workspaceNames";
 
 export default function BlocklyEditor({
   setNodes,
@@ -55,6 +56,9 @@ export default function BlocklyEditor({
       );
       savedWorkspaceRef.current = currentSnapshot;
       saveLocalWorkspaceRef(currentSnapshot);
+
+      // Live names from all four signature declaration block types.
+      console.log("Signature names:", getSignatureNames(workspaceRef.current));
     };
 
     workspaceRef.current.addChangeListener(handleWorkspaceChange);

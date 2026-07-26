@@ -1,4 +1,5 @@
 import * as Blockly from "blockly";
+import { signatureDropdownOptions } from "../../workspaceNames";
 
 Blockly.Blocks["alloy_sigEx_empty"] = {
   init: function () {
@@ -6,7 +7,7 @@ Blockly.Blocks["alloy_sigEx_empty"] = {
       .appendField("sig")
       .appendField(new Blockly.FieldTextInput("Student"), "NAME")
       .appendField("extends")
-      .appendField(new Blockly.FieldTextInput("Person"), "EXTENDNAME")
+      .appendField(new Blockly.FieldDropdown(signatureDropdownOptions), "EXTENDNAME")
       .appendField("{ }");
 
 
