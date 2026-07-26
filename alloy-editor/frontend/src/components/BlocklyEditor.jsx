@@ -10,6 +10,7 @@ import getNodesAndEdges, {
 } from "../utils/flow/reactFlowConverter";
 import { Code, Trash, SquarePlay } from "lucide-react";
 import layoutNodes from "../utils/layout/layoutNodes";
+import { saveLocalWorkspaceRef } from "../utils/localStorage";
 
 export default function BlocklyEditor({
   setNodes,
@@ -53,6 +54,7 @@ export default function BlocklyEditor({
         workspaceRef.current,
       );
       savedWorkspaceRef.current = currentSnapshot;
+      saveLocalWorkspaceRef(currentSnapshot);
     };
 
     workspaceRef.current.addChangeListener(handleWorkspaceChange);
@@ -63,6 +65,7 @@ export default function BlocklyEditor({
           workspaceRef.current,
         );
         savedWorkspaceRef.current = finalSnapshot;
+        saveLocalWorkspaceRef(finalSnapshot);
         workspaceRef.current.removeChangeListener(handleWorkspaceChange);
         workspaceRef.current?.dispose();
         workspaceRef.current = null;
@@ -112,8 +115,6 @@ export default function BlocklyEditor({
           updatedNodes,
           result.relations,
         );
-        console.log(nodes, edges, updatedNodes);
-        console.log(result);
         setNodes(updatedNodes);
         setEdges(updatedEdges);
         setOriginalGraph({ nodes: updatedNodes, edges: updatedEdges });

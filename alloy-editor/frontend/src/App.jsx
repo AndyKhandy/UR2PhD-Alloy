@@ -2,22 +2,28 @@ import BlocklyEditor from "./components/BlocklyEditor";
 import GraphPlane from "./components/GraphPlane";
 import CodeView from "./components/CodeView";
 import "./styles/App.css";
-import { useState, useRef } from "react";
-import { useNodesState, useEdgesState, useReactFlow } from "@xyflow/react";
+import { useEffect, useRef, useState } from "react";
 import { initialEdges, initialNodes, initialCode } from "./utils/demoResult";
+import {
+  localGraph,
+  localWorkspaceRef,
+  saveLocalGraph,
+} from "./utils/localStorage";
 
 function App() {
   const [mode, setMode] = useState("editor");
-  const [nodes, setNodes] = useState(initialNodes);
-  const [edges, setEdges] = useState(initialEdges);
+  const [nodes, setNodes] = useState(localGraph.nodes || initialNodes);
+  const [edges, setEdges] = useState(localGraph.edges || initialEdges);
   const [alloyCode, setAlloyCode] = useState(initialCode);
   const [originalGraph, setOriginalGraph] = useState({
-    nodes: initialNodes,
-    edges: initialEdges,
+    nodes: localGraph.nodes || initialNodes,
+    edges: localGraph.edges || initialEdges,
   });
-  const savedWorkspaceRef = useRef({
-    blocks: { languageVersion: 0, blocks: [] },
-  });
+  const savedWorkspaceRef = useRef(localWorkspaceRef);
+
+  useEffect(() => {
+    saveLocalGraph({ nodes, edges });
+  }, [nodes, edges]);
 
   const changeMode = (modeClicked) => {
     setMode(modeClicked);

@@ -6,7 +6,7 @@ export const HANDLE_COUNT = Math.floor(NODE_HEIGHT / HANDLE_SPACING);
 
 // COLOR SCHEMES
 
-export const sigColors = ["#e110ad", "#ff8f17", "#60a5fa"];
+export const sigColors = ["#e110ad", "#ff8f17", "#60a5fa","#3fbd26" ];
 
 // FONT DETERMINE
 
