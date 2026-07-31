@@ -1,4 +1,4 @@
-import { useState, useCallback, useRef } from "react";
+import { useCallback } from "react";
 import {
   ReactFlow,
   Background,
@@ -8,14 +8,13 @@ import {
   addEdge,
   MiniMap,
   Panel,
-  useReactFlow,
 } from "@xyflow/react";
 import "@xyflow/react/dist/style.css";
 import "../styles/GraphPlane.css";
 import SelfLoopEdge from "./graph/SelfLoopEdge";
 import AlloyNode from "./graph/AlloyNode";
-import { RotateCcw } from "lucide-react";
-
+import { RotateCcw, ArrowBigLeft, ArrowBigRight } from "lucide-react";
+import getGraphInstance from "../utils/graphParser/extractGraphInstance";
 
 const nodeTypes = {
   alloy: AlloyNode,
@@ -25,12 +24,52 @@ const edgeTypes = {
   selfLoop: SelfLoopEdge,
 };
 
-export default function GraphPlane({ nodes, edges, setEdges, setNodes, originalGraph }) {
+export default function GraphPlane({
+  nodes,
+  edges,
+  setEdges,
+  setNodes,
+  originalGraph,
+  setOriginalGraph,
+  instanceIndex,
+  setInstanceIndex,
+  alloyResult,
+}) {
+  const previousButtonDisabled = instanceIndex === 0;
+
+  const nextButtonDisabled =
+    instanceIndex + 1 === alloyResult?.instanceCount;
 
   const resetGraph = () => {
     setNodes(structuredClone(originalGraph.nodes));
     setEdges(structuredClone(originalGraph.edges));
-  }
+  };
+
+  const getNextInstance = async () => {
+    const newIndex = instanceIndex + 1;
+
+    const { nodes: newNodes, edges: newEdges } = await getGraphInstance(
+      alloyResult,
+      newIndex,
+    );
+    setInstanceIndex(newIndex);
+    setNodes(newNodes);
+    setEdges(newEdges);
+    setOriginalGraph({ nodes: newNodes, edges: newEdges });
+  };
+
+  const getPreviousInstance = async () => {
+    const newIndex = instanceIndex - 1;
+
+    const { nodes: newNodes, edges: newEdges } = await getGraphInstance(
+      alloyResult,
+      newIndex,
+    );
+    setInstanceIndex(newIndex);
+    setNodes(newNodes);
+    setEdges(newEdges);
+    setOriginalGraph({ nodes: newNodes, edges: newEdges });
+  };
 
   const onNodesChange = useCallback(
     (changes) =>
@@ -85,7 +124,22 @@ export default function GraphPlane({ nodes, edges, setEdges, setNodes, originalG
         </Panel>
         <Controls></Controls>
       </ReactFlow>
-      <button onClick={resetGraph} className="reset-btn" ><RotateCcw color="purple"/></button>
+      <div className="buttons">
+        <button onClick={resetGraph} className="reset-btn">
+          <RotateCcw color="purple" />
+        </button>
+        {alloyResult?.satisfiable && (
+          <div className="instance-buttons flex">
+            <button disabled={previousButtonDisabled} onClick={getPreviousInstance}>
+              <ArrowBigLeft />
+            </button>
+            <h4>{`${instanceIndex + 1} of ${alloyResult.instanceCount}`}</h4>
+            <button disabled={nextButtonDisabled} onClick={getNextInstance}>
+              <ArrowBigRight />
+            </button>
+          </div>
+        )}
+      </div>
     </div>
   );
 }

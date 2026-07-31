@@ -86,19 +86,11 @@
   position: relative;
 }
 
-.reset-btn {
-  position: absolute;
-  right: 15px;
-  top: -15px;
-  background-color: rgb(255, 255, 255);
-  cursor: pointer;
-  padding: 2px;
-  border: 2px solid black;
-  border-radius: 2px;
-  transition: 200ms ease-in;
+.instance-buttons{
+  align-items: center;
+  gap: 2px;
 }
-
-.reset-btn:hover {
-  transform: translateY(3px);
-  background-color: rgb(202, 194, 194);
+h4{
+  background-color: rgb(253, 252, 252);
+  padding: 6px;
 }

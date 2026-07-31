@@ -5,16 +5,13 @@ import "../blockly/generators/indexG";
 import { toolbox } from "../blockly/toolbox";
 import { alloyGenerator } from "../blockly/generators/alloy_generator";
 import "../styles/blockly.css";
-import getNodesAndEdges, {
-  assignEdgeHandles,
-} from "../utils/flow/reactFlowConverter";
 import { Code, Trash, SquarePlay } from "lucide-react";
-import layoutNodes from "../utils/layout/layoutNodes";
 import { saveLocalWorkspaceRef } from "../utils/localStorage";
 import {
   getAllAlloyNames,
   refreshDynamicNameDropdowns,
 } from "../blockly/workspaceNames";
+import getGraphInstance from "../utils/graphParser/extractGraphInstance";
 
 export default function BlocklyEditor({
   setNodes,
@@ -23,6 +20,8 @@ export default function BlocklyEditor({
   setOriginalGraph,
   savedWorkspaceRef,
   setAlloyCode,
+  setAlloyResult,
+  setInstanceIndex
 }) {
   const blocklyDiv = useRef(null);
   const workspaceRef = useRef(null);
@@ -90,11 +89,18 @@ export default function BlocklyEditor({
     const code = alloyGenerator.workspaceToCode(workspaceRef.current);
     if (code) {
       setAlloyCode(code);
-      console.log(code);
-      console.log(code.split("\n"));
       changeMode("code");
       setRunError(null);
     }
+  }
+
+  async function loadInstance(result, index) {
+    const { nodes, edges } = await getGraphInstance(result, index);
+
+    setInstanceIndex(index);
+    setNodes(nodes);
+    setEdges(edges);
+    setOriginalGraph({ nodes, edges });
   }
 
   async function runModel() {
@@ -113,20 +119,20 @@ export default function BlocklyEditor({
           throw new Error(`Server error: ${response.status}`);
         }
         const result = await response.json();
-        const [nodes, edges] = getNodesAndEdges(result);
-        const updatedNodes = await layoutNodes(nodes, edges);
-        const updatedEdges = assignEdgeHandles(
-          edges,
-          updatedNodes,
-          result.relations,
-        );
-        setNodes(updatedNodes);
-        setEdges(updatedEdges);
-        setOriginalGraph({ nodes: updatedNodes, edges: updatedEdges });
+        setAlloyResult(result);
+
+        if (result.satisfiable && result.instances?.length > 0) {
+          await loadInstance(result, 0);
+         } else {
+          setInstanceIndex(0);
+          setNodes([]);
+          setEdges([]);
+          setOriginalGraph({ nodes: [], edges: [] });
+        }
       } catch (err) {
         setRunError(err.message);
       } finally {
-        changeMode("graph");
+        // changeMode("graph");
         setIsRunning(false);
       }
     }

@@ -12,6 +12,13 @@ import {
 
 function App() {
   const [mode, setMode] = useState("editor");
+  const [alloyResult, setAlloyResult] = useState({
+    satisfiable: false,
+    instances: [],
+    instanceCount: 0,
+    limitReached: false,
+  });
+  const [instanceIndex, setInstanceIndex] = useState(0);
   const [nodes, setNodes] = useState(localGraph.nodes || initialNodes);
   const [edges, setEdges] = useState(localGraph.edges || initialEdges);
   const [alloyCode, setAlloyCode] = useState(initialCode);
@@ -62,6 +69,8 @@ function App() {
           setOriginalGraph={setOriginalGraph}
           savedWorkspaceRef={savedWorkspaceRef}
           setAlloyCode={setAlloyCode}
+          setAlloyResult={setAlloyResult}
+          setInstanceIndex={setInstanceIndex}
         ></BlocklyEditor>
       )}
       {mode == "code" && <CodeView alloyCode={alloyCode}></CodeView>}
@@ -73,6 +82,10 @@ function App() {
             setNodes={setNodes}
             setEdges={setEdges}
             originalGraph={originalGraph}
+            setOriginalGraph={setOriginalGraph}
+            instanceIndex={instanceIndex}
+            setInstanceIndex={setInstanceIndex}
+            alloyResult={alloyResult}
           ></GraphPlane>
         </div>
       )}

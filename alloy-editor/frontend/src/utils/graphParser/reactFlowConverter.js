@@ -27,7 +27,7 @@ const nextHandle = (usage, nodeId, side) => {
 };
 
 export default function getNodesAndEdges(alloyResult) {
-  if (alloyResult.satisfiable) {
+  if (alloyResult) {
     return [
       convertToNodes(alloyResult.atoms),
       convertToEdges(alloyResult.relations),
@@ -40,7 +40,6 @@ export default function getNodesAndEdges(alloyResult) {
 export function convertToNodes(atoms) {
   return Object.entries(atoms).flatMap(([name, instances], index) =>
     instances.map((instance, instanceIndex) => {
-      console.log(sigColors[index]);
       return {
         id: instance,
         type: "alloy",

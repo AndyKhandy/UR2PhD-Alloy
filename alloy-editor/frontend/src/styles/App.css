@@ -11,6 +11,10 @@
   font-family: "Ubuntu", sans-serif;
 }
 
+.flex{
+  display: flex
+}
+
 .header {
   display: flex;
   justify-content: center;
@@ -79,3 +83,26 @@ h1:hover::before {
   justify-content: center;
 }
 
+.buttons{
+  position: absolute;
+  right: 15px;
+  top: -16px;
+  border-radius: 10px;
+  display: flex;
+  gap: 3px;
+}
+
+
+.buttons button {
+  background-color: rgb(255, 255, 255);
+  cursor: pointer;
+  padding: 2px;
+  border: 2px solid black;
+  border-radius: 2px;
+  transition: 200ms ease-in
+}
+
+.buttons button:hover {
+  transform: translateY(3px);
+  background-color: rgb(202, 194, 194);
+}
