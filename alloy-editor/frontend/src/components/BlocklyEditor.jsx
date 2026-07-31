@@ -132,7 +132,7 @@ export default function BlocklyEditor({
       } catch (err) {
         setRunError(err.message);
       } finally {
-        // changeMode("graph");
+        changeMode("graph");
         setIsRunning(false);
       }
     }

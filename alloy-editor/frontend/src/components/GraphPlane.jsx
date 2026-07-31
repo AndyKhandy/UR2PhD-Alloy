@@ -37,8 +37,7 @@ export default function GraphPlane({
 }) {
   const previousButtonDisabled = instanceIndex === 0;
 
-  const nextButtonDisabled =
-    instanceIndex + 1 === alloyResult?.instanceCount;
+  const nextButtonDisabled = instanceIndex + 1 === alloyResult?.instanceCount;
 
   const resetGraph = () => {
     setNodes(structuredClone(originalGraph.nodes));
@@ -120,7 +119,7 @@ export default function GraphPlane({
           nodeColor={(node) => node.data.color}
         />
         <Panel position="top-left">
-          <h1>Graph Instance</h1>
+          <h1>{`Graph Instance ${alloyResult.satisfiable ? "#" + (instanceIndex + 1) : ""}`}</h1>
         </Panel>
         <Controls></Controls>
       </ReactFlow>
@@ -130,7 +129,10 @@ export default function GraphPlane({
         </button>
         {alloyResult?.satisfiable && (
           <div className="instance-buttons flex">
-            <button disabled={previousButtonDisabled} onClick={getPreviousInstance}>
+            <button
+              disabled={previousButtonDisabled}
+              onClick={getPreviousInstance}
+            >
               <ArrowBigLeft />
             </button>
             <h4>{`${instanceIndex + 1} of ${alloyResult.instanceCount}`}</h4>

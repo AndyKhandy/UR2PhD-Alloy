@@ -5,20 +5,19 @@ import "./styles/App.css";
 import { useEffect, useRef, useState } from "react";
 import { initialEdges, initialNodes, initialCode } from "./utils/demoData";
 import {
+  localAlloyResult,
+  localInstanceIndex,
   localGraph,
   localWorkspaceRef,
+  saveAlloyResult,
+  saveLocalInstanceIndex,
   saveLocalGraph,
 } from "./utils/localStorage";
 
 function App() {
   const [mode, setMode] = useState("editor");
-  const [alloyResult, setAlloyResult] = useState({
-    satisfiable: false,
-    instances: [],
-    instanceCount: 0,
-    limitReached: false,
-  });
-  const [instanceIndex, setInstanceIndex] = useState(0);
+  const [alloyResult, setAlloyResult] = useState(localAlloyResult);
+  const [instanceIndex, setInstanceIndex] = useState(localInstanceIndex);
   const [nodes, setNodes] = useState(localGraph.nodes || initialNodes);
   const [edges, setEdges] = useState(localGraph.edges || initialEdges);
   const [alloyCode, setAlloyCode] = useState(initialCode);
@@ -31,6 +30,14 @@ function App() {
   useEffect(() => {
     saveLocalGraph({ nodes, edges });
   }, [nodes, edges]);
+
+  useEffect(() => {
+    saveAlloyResult(alloyResult);
+  }, [alloyResult]);
+
+  useEffect(() => {
+    saveLocalInstanceIndex(instanceIndex);
+  }, [instanceIndex]);
 
   const changeMode = (modeClicked) => {
     setMode(modeClicked);

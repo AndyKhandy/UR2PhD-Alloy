@@ -19,3 +19,29 @@ export const localGraph = JSON.parse(
 export const saveLocalGraph = (graph) => {
   localStorage.setItem("savedGraph", JSON.stringify(graph));
 };
+
+export const localAlloyResult = JSON.parse(
+  localStorage.getItem("alloyResult"),
+) || {
+  satisfiable: false,
+  instances: [],
+  instanceCount: 0,
+  limitReached: false,
+};
+
+export const saveAlloyResult = (result) => {
+  try {
+    localStorage.setItem("alloyResult", JSON.stringify(result));
+  } catch (error) {
+    console.warn("Unable to save Alloy result:", error);
+  }
+};
+
+export const localInstanceIndex = Number.parseInt(
+  localStorage.getItem("instanceIndex"),
+  10,
+) || 0;
+
+export const saveLocalInstanceIndex = (index) => {
+  localStorage.setItem("instanceIndex", String(index));
+};

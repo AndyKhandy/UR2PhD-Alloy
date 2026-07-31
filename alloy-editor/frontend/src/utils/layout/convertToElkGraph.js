@@ -23,9 +23,9 @@ export default function convertToElkGraph(flowNodes, flowEdges) {
       "elk.algorithm": "layered",
       "elk.direction": "DOWN",
 
-      "elk.spacing.nodeNode": "100",
-      "elk.spacing.edgeNode": "60",
-      "elk.layered.spacing.nodeNodeBetweenLayers": "120",
+      "elk.spacing.nodeNode": "120",
+      "elk.spacing.edgeNode": "70",
+      "elk.layered.spacing.nodeNodeBetweenLayers": "130",
 
       "elk.layered.crossingMinimization.strategy": "LAYER_SWEEP",
 
