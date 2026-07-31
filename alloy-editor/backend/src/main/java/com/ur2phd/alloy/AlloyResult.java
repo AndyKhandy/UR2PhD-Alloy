@@ -1,43 +1,25 @@
 package com.ur2phd.alloy;
 
 import java.util.List;
-import java.util.Map;
 
 public class AlloyResult {
     private final boolean satisfiable;
-    private final Map<String, List<String>> atoms;
-    private final List<Relation> relations;
+    private final List<AlloyInstanceResult> instances;
+    private final int instanceCount;
+    private final boolean limitReached;
 
     public AlloyResult(boolean satisfiable,
-                       Map<String, List<String>> atoms,
-                       List<Relation> relations) {
+                       List<AlloyInstanceResult> instances,
+                       int instanceCount,
+                       boolean limitReached) {
         this.satisfiable = satisfiable;
-        this.atoms = atoms;
-        this.relations = relations;
+        this.instances = instances;
+        this.instanceCount = instanceCount;
+        this.limitReached = limitReached;
     }
 
-    public boolean isSatisfiable()              { return satisfiable; }
-    public Map<String, List<String>> getAtoms() { return atoms; }
-    public List<Relation> getRelations()        { return relations; }
-
-    @Override
-    public String toString() {
-        if (!satisfiable) {
-            return "Status: UNSATISFIABLE";
-        }
-        StringBuilder sb = new StringBuilder("Status: SATISFIABLE\n");
-        for (Map.Entry<String, List<String>> entry : atoms.entrySet()) {
-            sb.append("Signature: ").append(entry.getKey()).append("\n");
-            for (String atom : entry.getValue()) {
-                sb.append("  Atom: ").append(atom).append("\n");
-            }
-        }
-        if (!relations.isEmpty()) {
-            sb.append("Relations:\n");
-            for (Relation r : relations) {
-                sb.append("  ").append(r).append("\n");
-            }
-        }
-        return sb.toString().trim();
-    }
+    public boolean isSatisfiable() { return satisfiable; }
+    public List<AlloyInstanceResult> getInstances() { return instances; }
+    public int getInstanceCount() { return instanceCount; }
+    public boolean isLimitReached() { return limitReached; }
 }
